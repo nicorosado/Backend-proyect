@@ -28,7 +28,7 @@ class ProductManager {
 
     product = { id: this.currentId++, ...product };
     this.products.push(product);
-    const productsString = JSON.stringify(this.products);
+    const productsString = JSON.stringify(this.products, null, 2);
     fs.writeFileSync(this.path, productsString);
     return "Product added";
   }
@@ -66,7 +66,7 @@ class ProductManager {
 
     this.products[productIndex] = updatedProduct;
 
-    const productsString = JSON.stringify(this.products);
+    const productsString = JSON.stringify(this.products, null, 2);
     fs.writeFileSync(this.path, productsString);
 
     return "Product updated";
