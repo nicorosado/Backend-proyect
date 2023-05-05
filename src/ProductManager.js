@@ -1,150 +1,99 @@
-import fs from "fs";
+import fs from 'fs'
+import { v4 as uuid } from 'uuid'
 
 export class ProductManager {
-  constructor(path) {
-    this.path = path;
-    this.currentId = 1;
+  constructor (path) {
+    this.path = path
   }
 
-  async addProduct(product) {
+  async addProduct (product) {
     if (
       !product.title ||
       !product.description ||
       !product.price ||
-      !product.thumbnail ||
       !product.code ||
       !product.stock
     ) {
-      return "missing properties";
+      throw new Error('missing properties')
     }
-    const products = await this.getProducts();
-    if (products.some((item) => item.code === product.code)) {
-      return "Product already exists";
+    if (!product.thumbnails) {
+      product.thumbnails = []
     }
-
-    product = { id: this.currentId++, ...product };
-    products.push(product);
-    const productsString = JSON.stringify(products, null, 2);
+    const products = await this.getProducts()
+    const code = product.code
+    if (products.find((product) => product.code === code)) {
+      throw new Error('code duplicated')
+    }
+    product = { id: uuid(), ...product }
+    products.push(product)
     try {
-      await fs.promises.writeFile(this.path, productsString);
-      return "Product added";
+      const productsString = JSON.stringify(products, null, 2)
+      await fs.promises.writeFile(this.path, productsString)
+      return product
     } catch (error) {
-      return "Error adding product";
+      throw new Error(error)
     }
   }
 
-  async getProductById(id) {
-    const products = await this.getProducts();
-    const found = products.find((product) => product.id === id);
+  async getProductById (id) {
+    const products = await this.getProducts()
+    const found = products.find((product) => product.id === id)
     if (!found) {
-      return "Product not found";
+      throw new Error('Product not found on that id')
     }
-    return found;
+    return found
   }
 
-  async getProducts() {
+  async getProducts () {
     try {
-      const productString = await fs.promises.readFile(this.path, "utf-8");
-      const products = JSON.parse(productString);
-      return products;
+      const productString = await fs.promises.readFile(this.path, 'utf-8')
+      const products = JSON.parse(productString)
+      return products
     } catch (error) {
-      return [];
+      return []
     }
   }
 
-  async updateProduct(id, newValues) {
-    const products = await this.getProducts();
-    const productIndex = products.findIndex((product) => product.id === id);
+  async updateProduct (id, newValues) {
+    const products = await this.getProducts()
+    const productIndex = products.findIndex((product) => product.id === id)
 
     if (productIndex === -1) {
-      return "Product not found";
+      throw new Error('Product not found on that id')
     }
-
-    const { id: _id, ...updateData } = newValues;
-    const updatedProduct = {
-      ...products[productIndex],
-      ...updateData,
-    };
-
-    products[productIndex] = updatedProduct;
-
-    const productsString = JSON.stringify(products, null, 2);
     try {
-      await fs.promises.writeFile(this.path, productsString);
-      return "Product updated";
+      const { id: _id, ...updateData } = newValues
+      const updatedProduct = {
+        ...products[productIndex],
+        ...updateData
+      }
+
+      products[productIndex] = updatedProduct
+
+      const productsString = JSON.stringify(products, null, 2)
+      await fs.promises.writeFile(this.path, productsString)
+      return updatedProduct
     } catch (error) {
-      return "Error updating product";
+      throw new Error(error)
     }
   }
 
-  async deleteProduct(id) {
-    const products = await this.getProducts();
-    const productIndex = products.findIndex((product) => product.id === id);
+  async deleteProduct (id) {
+    const products = await this.getProducts()
+    const productIndex = products.findIndex((product) => product.id === id)
 
     if (productIndex === -1) {
-      return "Product not found to delete";
+      throw new Error('Product not found to delete')
     }
 
-    products.splice(productIndex, 1);
+    products.splice(productIndex, 1)
 
-    const productsString = JSON.stringify(products, null, 2);
+    const productsString = JSON.stringify(products, null, 2)
     try {
-      await fs.promises.writeFile(this.path, productsString);
-      return "Product deleted";
+      await fs.promises.writeFile(this.path, productsString)
+      return 'product deleted'
     } catch (error) {
-      return "Error deleting product";
+      throw new Error(error)
     }
   }
 }
-
-const product1 = {
-  title: "producto prueba",
-  description: "Este es un producto prueba 1",
-  price: 200,
-  thumbnail: "Sin imagen",
-  code: "1",
-  stock: 25,
-};
-const product2 = {
-  title: "producto prueba",
-  description: "Este es un producto prueba 1",
-  price: 200,
-  thumbnail: "Sin imagen",
-  code: "2",
-  stock: 25,
-};
-const product3 = {
-  title: "producto prueba",
-  description: "Este es un producto prueba 1",
-  price: 200,
-  thumbnail: "Sin imagen",
-  code: "3",
-  stock: 25,
-};
-
-const updatedProduct = {
-  title: "Producto actualizado",
-  description: "nuevo producto",
-  price: 20.99,
-  thumbnail: "dsadsadsa",
-  code: "PRUEBA",
-  stock: 50,
-};
-
-async function test() {
-  const productManager = new ProductManager("./src/products.json");
-
-  console.log(await productManager.getProducts());
-
-  await productManager.addProduct(product1);
-  await productManager.addProduct(product2);
-  await productManager.addProduct(product3);
-
-  console.log(await productManager.getProductById(1));
-  console.log(await productManager.getProductById(2));
-
-  await productManager.updateProduct(1, updatedProduct);
-  console.log(productManager.currentId);
-}
-
-/* test(); */
