@@ -38,7 +38,7 @@ export class CartManager {
     if (!cart) {
       throw new Error(`cart with id ${cartId} not found`)
     }
-    return cart
+    return cart.products
   }
 
   async addProductToCart (cartId, productId, quantity = 1) {
