@@ -1,11 +1,9 @@
 [
-  
   {
     "id": "70061227050044",
     "title": "hakunamatata",
     "description": "comida",
     "price": 2421,
-    "thumbnail": "http://dummyimage.com/244x100.png/5fa2dd/ffffff",
     "code": 9212143,
     "stock": 36,
     "status": true,
@@ -16,7 +14,6 @@
     "title": "hakunamatata",
     "description": "comida",
     "price": 2421,
-    "thumbnail": "http://dummyimage.com/244x100.png/5fa2dd/ffffff",
     "code": 92121423,
     "stock": 36,
     "status": true,
@@ -27,10 +24,29 @@
     "title": "hakunamatata",
     "description": "comida",
     "price": 2421,
-    "thumbnail": "http://dummyimage.com/244x100.png/5fa2dd/ffffff",
     "code": 9212142123,
     "stock": 36,
     "status": true,
+    "thumbnails": []
+  },
+  {
+    "id": "374944aa-f929-4f1f-a1df-6c444acd38f5",
+    "status": true,
+    "title": "prodnuevo",
+    "description": "comida",
+    "price": 2421,
+    "code": 92122142123,
+    "stock": 36,
+    "thumbnails": []
+  },
+  {
+    "id": "9e93e543-56c1-4ba1-a38c-17b2cc4c2dca",
+    "status": true,
+    "title": "otroproducto",
+    "description": "comida",
+    "price": 2421,
+    "code": 213,
+    "stock": 36,
     "thumbnails": []
   }
 ]

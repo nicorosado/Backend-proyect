@@ -24,7 +24,7 @@ export class ProductManager {
     if (products.find((product) => product.code === code)) {
       throw new Error('code duplicated')
     }
-    product = { id: uuid(), ...product }
+    product = { id: uuid(), status: true, ...product }
     products.push(product)
     try {
       const productsString = JSON.stringify(products, null, 2)

@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "dee6c7a8-b874-4ab3-a155-859cf6e34e65",
+		"name": "API 51380",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27127552"
+	},
+	"item": [
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"otroproducto\",\r\n    \"description\": \"comida\",\r\n    \"price\": 2421,\r\n    \"code\": 213,\r\n    \"stock\": 36\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modify",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"procucto\",\r\n    \"description\": \"modificado445\",\r\n    \"price\": 2421,\r\n    \"thumbnail\": \"http://dummyimage.com/244x100.png/5fa2dd/ffffff\",\r\n    \"code\": 92121,\r\n    \"stock\": 36\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all with limit",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products?limit=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/95226382576129",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"95226382576129"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "carts",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/9545006858972",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"9545006858972"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add product by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/9545006858972/product/70061227050044",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"9545006858972",
+								"product",
+								"70061227050044"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
