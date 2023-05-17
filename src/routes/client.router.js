@@ -22,15 +22,3 @@ clientRouter.get('/realtimeProducts', async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 })
-
-/* clientRouter.post('/realtimeProducts', async (req, res) => {
-  try {
-    const product = req.body
-
-    await productManager.addProduct(product)
-
-    res.redirect('/realtimeProducts')
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-}) */
