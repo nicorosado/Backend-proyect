@@ -7,7 +7,7 @@
       <img src={{this.thumbnails}} alt="">
       <p><strong>Price:</strong> ${{this.price}}</p>
       <p><strong>Stock:</strong> {{this.stock}}</p>
-      <button class="delete-btn" data-id="{{_id}}">Delete</button>
+      <button class="delete-btn" onclick="deleteProductWithSocket('{{this.id}}')">Delete</button>
     </div>
     {{/each}}
   </div>

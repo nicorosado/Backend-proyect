@@ -1,13 +1,13 @@
 <div>
-    <h1>Product List</h1>
+    <h1>Product List with socket</h1>
     <div id="product-container" class="product-list">
       {{#each products}}
-      <div class="product">
+      <div class="product" id="{{this.id}}">
         <h2>{{this.title}}</h2>
         <img src={{this.thumbnails}} alt="">
         <p><strong>Price:</strong> ${{this.price}}</p>
         <p><strong>Stock:</strong> {{this.stock}}</p>
-        <button class="delete-btn" data-id="{{_id}}">Delete</button>
+        <button class="delete-btn" onclick="deleteProductWithSocket('{{this.id}}')">Delete</button>
       </div>
       {{/each}}
     </div>

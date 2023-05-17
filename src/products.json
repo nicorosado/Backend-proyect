@@ -61,45 +61,5 @@
       "/thumbnails/1683739341559-19739767-licensed-image.jpg"
     ],
     "status": true
-  },
-  {
-    "id": "6c287f1d-835f-4b17-987c-2300c46242c9",
-    "title": "sad",
-    "description": "sdasa",
-    "price": 213,
-    "code": "111111",
-    "stock": 123,
-    "thumbnails": [],
-    "status": true
-  },
-  {
-    "id": "c778f643-2da9-49d6-8995-1d955f2099bc",
-    "title": "hola",
-    "description": "hgola",
-    "price": 213,
-    "code": "1111111123",
-    "stock": 213,
-    "thumbnails": [],
-    "status": true
-  },
-  {
-    "id": "58ee6446-6ba5-4ead-97ed-8fe581f3771a",
-    "title": "asdsad",
-    "description": "asdasdasd",
-    "price": 231123,
-    "code": "7678679",
-    "stock": 23,
-    "thumbnails": [],
-    "status": true
-  },
-  {
-    "id": "69c75150-efbb-4c05-a92b-5520227aa12e",
-    "title": "neuyvo",
-    "description": "adasd",
-    "price": 213,
-    "code": "7865756",
-    "stock": 123,
-    "thumbnails": [],
-    "status": true
   }
 ]

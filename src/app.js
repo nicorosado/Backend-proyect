@@ -30,14 +30,6 @@ const httpServer = app.listen(PORT, () => {
 })
 
 const io = new Server(httpServer)
-/* io.on('connection', async (socket) => {
-  console.log('se abrio un canal de socket ' + socket.id)
-  socket.on('addProduct', async (product) => {
-    const productManager = new ProductManager('src/products.json')
-    const newProduct = await productManager.addProduct(product)
-    io.emit('productAdded', newProduct)
-  })
-}) */
 
 io.on('connection', async (socket) => {
   console.log('se abrió un canal de socket ' + socket.id)
@@ -54,13 +46,10 @@ io.on('connection', async (socket) => {
     }
   })
 
-  socket.on('delete-product', async (productId) => {
-    try {
-      await productManager.deleteProduct(productId)
-      io.emit('productDeleted', productId)
-    } catch (error) {
-      console.error(error)
-    }
+  socket.on('product:delete', async id => {
+    await productManager.deleteProduct(id)
+    // eslint-disable-next-line no-undef
+    io.emit('product:deleted', id)
   })
 })
 export { app }
