@@ -1,52 +1,105 @@
 [
   {
     "id": "70061227050044",
-    "title": "hakunamatata",
-    "description": "comida",
-    "price": 2421,
-    "code": 9212143,
-    "stock": 36,
+    "title": "Zapatillas Deportivas Negras",
+    "description": "Zapatillas deportivas de color negro para hombre/mujer.",
+    "price": 59.99,
+    "code": "ZN001",
+    "stock": 20,
     "status": true,
     "thumbnails": []
   },
   {
     "id": "95226382576129",
-    "title": "hakunamatata",
-    "description": "comida",
-    "price": 2421,
-    "code": 92121423,
-    "stock": 36,
+    "title": "Zapatillas de Running Azules",
+    "description": "Zapatillas de running de color azul para corredores.",
+    "price": 79.99,
+    "code": "ZA003",
+    "stock": 10,
     "status": true,
     "thumbnails": []
   },
   {
     "id": "36818888-0dc2-4cce-a14f-fde1ee74f5e0",
-    "title": "hakunamatata",
-    "description": "comida",
-    "price": 2421,
-    "code": 9212142123,
-    "stock": 36,
+    "title": "Zapatillas de Moda Grises",
+    "description": "Zapatillas de moda de color gris con estilo moderno.",
+    "price": 89.99,
+    "code": "ZM005",
+    "stock": 12,
     "status": true,
     "thumbnails": []
   },
   {
     "id": "374944aa-f929-4f1f-a1df-6c444acd38f5",
     "status": true,
-    "title": "prodnuevo",
-    "description": "comida",
-    "price": 2421,
-    "code": 92122142123,
-    "stock": 36,
+    "title": "Zapatillas Deportivas Rosas",
+    "description": "Zapatillas deportivas de color rosa para mujer.",
+    "price": 54.99,
+    "code": "ZD006",
+    "stock": 18,
     "thumbnails": []
   },
   {
     "id": "9e93e543-56c1-4ba1-a38c-17b2cc4c2dca",
     "status": true,
-    "title": "otroproducto",
-    "description": "comida",
-    "price": 2421,
-    "code": 213,
-    "stock": 36,
+    "title": "Zapatillas de Running Verdes",
+    "description": "Zapatillas de running de color verde para corredores.",
+    "price": 79.99,
+    "code": "ZV007",
+    "stock": 10,
     "thumbnails": []
+  },
+  {
+    "id": "b0dfa95f-925a-4dcf-aae2-95ff2ad6a49d",
+    "title": "Zapatillas Urbanas Negras",
+    "description": "Zapatillas urbanas de color negro para uso casual.",
+    "price": 44.99,
+    "code": "ZU008",
+    "stock": 25,
+    "thumbnails": [
+      "/thumbnails/1683739341558-443152906-images.jpg",
+      "/thumbnails/1683739341559-19739767-licensed-image.jpg"
+    ],
+    "status": true
+  },
+  {
+    "id": "6c287f1d-835f-4b17-987c-2300c46242c9",
+    "title": "sad",
+    "description": "sdasa",
+    "price": 213,
+    "code": "111111",
+    "stock": 123,
+    "thumbnails": [],
+    "status": true
+  },
+  {
+    "id": "c778f643-2da9-49d6-8995-1d955f2099bc",
+    "title": "hola",
+    "description": "hgola",
+    "price": 213,
+    "code": "1111111123",
+    "stock": 213,
+    "thumbnails": [],
+    "status": true
+  },
+  {
+    "id": "58ee6446-6ba5-4ead-97ed-8fe581f3771a",
+    "title": "asdsad",
+    "description": "asdasdasd",
+    "price": 231123,
+    "code": "7678679",
+    "stock": 23,
+    "thumbnails": [],
+    "status": true
+  },
+  {
+    "id": "69c75150-efbb-4c05-a92b-5520227aa12e",
+    "title": "neuyvo",
+    "description": "adasd",
+    "price": 213,
+    "code": "7865756",
+    "stock": 123,
+    "thumbnails": [],
+    "status": true
   }
 ]

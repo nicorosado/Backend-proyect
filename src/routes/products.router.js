@@ -1,7 +1,8 @@
 import express from 'express'
 import { ProductManager } from '../ProductManager.js'
-const productManager = new ProductManager('src/products.json')
+
 export const productRouter = express.Router()
+const productManager = new ProductManager('src/products.json')
 
 productRouter.get('/', async (req, res) => {
   try {
@@ -36,6 +37,7 @@ productRouter.get('/:pid', async (req, res) => {
 productRouter.post('/', async (req, res) => {
   try {
     const newProduct = req.body
+    // newProduct.thumbnails = req.files.map(file => `/thumbnails/${file.filename}`)
     const product = await productManager.addProduct(newProduct)
     return res.status(201).json({ status: 'success', payload: product })
   } catch (error) {

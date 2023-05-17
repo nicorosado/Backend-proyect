@@ -28,7 +28,6 @@ export class CartManager {
     const carts = await this.getAllCarts()
     carts.push(newCart)
     await this.saveCarts(carts)
-    console.log(newCart)
     return newCart
   }
 
