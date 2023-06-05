@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 const form = document.querySelector('.form')
 const titleInput = document.getElementById('title')
@@ -6,13 +7,13 @@ const priceInput = document.getElementById('price')
 const codeInput = document.getElementById('code')
 const stockInput = document.getElementById('stock')
 
-// eslint-disable-next-line no-unused-vars
-function deleteProductWithSocket (id) {
+// eslint-disable-next-line no-unused-vars, space-before-function-paren
+async function deleteProductWithSocket(id) {
   socket.emit('product:delete', id)
 }
 
-// eslint-disable-next-line no-unused-vars
-async function deleteProduct (id) {
+// eslint-disable-next-line no-unused-vars, space-before-function-paren
+async function deleteProduct(id) {
   const response = await fetch(`/api/products/${id}`, {
     method: 'delete'
   })
@@ -25,47 +26,82 @@ async function deleteProduct (id) {
   }
 }
 
-form.addEventListener('submit', async (event) => {
-  event.preventDefault()
-  const title = titleInput.value
-  const description = descriptionInput.value
-  const price = parseFloat(priceInput.value)
-  const code = codeInput.value
-  const stock = parseInt(stockInput.value)
+try {
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    const title = titleInput.value
+    const description = descriptionInput.value
+    const price = parseFloat(priceInput.value)
+    const code = codeInput.value
+    const stock = parseInt(stockInput.value)
 
-  const product = {
-    title,
-    description,
-    price,
-    code,
-    stock
-  }
+    const product = {
+      title,
+      description,
+      price,
+      code,
+      stock
+    }
 
-  try {
-    socket.emit('addProduct', product)
-  } catch (error) {
-    const res = await fetch('/api/products', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(product)
-    })
-    if (res.ok) {
-      const product = (await res.json()).payload
-      const container = document.getElementById('product-container')
-      const productListElement = document.createElement('div')
-      productListElement.innerHTML = `
+    try {
+      socket.emit('addProduct', product)
+    } catch (error) {
+      const res = await fetch('/api/products', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(product)
+      })
+      if (res.ok) {
+        const product = (await res.json()).data
+        const container = document.getElementById('product-container')
+        const productListElement = document.createElement('div')
+        productListElement.innerHTML = `
                 <div class="product">
                   <h2>${product.title}</h2>
                   <img src="${product.thumbnails}" alt="">
                   <p><strong>Price:</strong> $${product.price}</p>
                   <p><strong>Stock:</strong> ${product.stock}</p>
-                  <button class="delete-btn" onclick="deleteProduct('${product.id}')">Delete</button>
+                  <button class="delete-btn" onclick="deleteProduct('${product._id}')">Delete</button>
                 </div>
         `
-      container.appendChild(productListElement)
+        container.appendChild(productListElement)
+      }
     }
+  })
+} catch (e) { }
+
+// eslint-disable-next-line prefer-const
+let userMail = ''
+// eslint-disable-next-line space-before-function-paren
+async function askEmail() {
+  const { value: name } = await Swal.fire({
+    title: 'Enter your mail',
+    input: 'text',
+    inputLabel: 'Your mail',
+    inputValue: '',
+    showCancelButton: false,
+    inputValidator: (value) => {
+      if (!value) {
+        return 'You need to write your mail!'
+      }
+    }
+  })
+  userMail = name
+}
+
+askEmail()
+
+const chatBox = document.getElementById('chat-box')
+
+chatBox.addEventListener('keyup', ({ key }) => {
+  if (key === 'Enter') {
+    socket.emit('msg-front-to-back', {
+      user: userMail,
+      message: chatBox.value
+    })
+    chatBox.value = ''
   }
 })
 
@@ -74,12 +110,12 @@ try {
     const container = document.getElementById('product-container')
     const productListElement = document.createElement('div')
     productListElement.innerHTML = `
-              <div id="${product.id}" class="product">
+              <div id="${product._id}" class="product">
                 <h2>${product.title}</h2>
                 <img src="${product.thumbnails}" alt="">
                 <p><strong>Price:</strong> $${product.price}</p>
                 <p><strong>Stock:</strong> ${product.stock}</p>
-                <button class="delete-btn" onclick="deleteProductWithSocket('${product.id}')">Delete</button>
+                <button class="delete-btn" onclick="deleteProductWithSocket('${product._id}')">Delete</button>
               </div>`
 
     container.appendChild(productListElement)
@@ -88,4 +124,16 @@ try {
     const div = document.getElementById(id)
     div.remove()
   })
-} catch (error) {}
+
+  socket.on('msg-back-to-front', async (msgs) => {
+    let formatedMsgs = ''
+    msgs.forEach((msg) => {
+      formatedMsgs += '<div style="border: 1px solid black">'
+      formatedMsgs += '<p>' + msg.user + '</p>'
+      formatedMsgs += '<p>' + msg.message + '</p>'
+      formatedMsgs += '</div>'
+    })
+    const divMsgs = document.getElementById('div-msgs')
+    divMsgs.innerHTML = formatedMsgs
+  })
+} catch (error) { }

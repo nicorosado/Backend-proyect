@@ -1,73 +1,83 @@
 import express from 'express'
-import { ProductManager } from '../ProductManager.js'
+import ProductService from '../services/products.service.js'
+const productService = new ProductService()
 
 export const productRouter = express.Router()
-const productManager = new ProductManager('src/products.json')
-
 productRouter.get('/', async (req, res) => {
   try {
+    // eslint-disable-next-line no-unused-vars
     const limit = req.query.limit
-    const products = await productManager.getProducts()
-    if (limit) {
-      res.status(200).json({ status: 'success', payload: (products.slice(0, limit)) })
-    } else {
-      res.status(200).json({ status: 'success', payload: products })
-    }
+    const products = await productService.getAllProducts()
+    res.status(200).json({ status: 'success', payload: products })
   } catch (error) {
-    res.status(500).json({ status: 'success', message: 'error' })
+    res.status(500).json({ status: 'error', message: 'error' })
   }
 })
 
 productRouter.get('/:pid', async (req, res) => {
   try {
     const id = req.params.pid
-    const product = await productManager.getProductById(id)
+    const product = await productService.getProductById(id)
     res.status(200).json({ status: 'success', payload: product })
   } catch (error) {
-    if (error.message === 'Product not found') {
-      return res.status(409).json({ status: 'error', message: error.message })
-    }
-    if (error.message === 'code duplicated') {
-      return res.status(409).json({ status: 'error', message: error.message })
-    }
     res.status(500).json({ status: 'error', message: 'error' })
   }
 })
 
 productRouter.post('/', async (req, res) => {
+  const productData = req.body
   try {
-    const newProduct = req.body
-    // newProduct.thumbnails = req.files.map(file => `/thumbnails/${file.filename}`)
-    const product = await productManager.addProduct(newProduct)
-    return res.status(201).json({ status: 'success', payload: product })
-  } catch (error) {
-    return res.status(500).json({ status: 'error', message: error.message })
+    const product = await productService.createProduct(productData)
+    return res.status(201).json({
+      status: 'success',
+      msg: 'user created',
+      data: product
+    })
+  } catch (e) {
+    return res.status(500).json({
+      status: 'error',
+      msg: 'something went wrong :(',
+      data: {}
+    })
   }
 })
 
-productRouter.put('/:pid', async (req, res) => {
-  const newValues = req.body
-  const id = req.params.pid
+productRouter.put('/:id', async (req, res) => {
   try {
-    if (newValues.id) {
-      return res.status(400).json({ status: 'error', error: "can't change id" })
-    }
-    const newProduct = await productManager.updateProduct(
-      (id),
-      newValues
-    )
-    return res.status(200).json({ status: 'success', payload: newProduct })
-  } catch (error) {
-    return res.status(500).json({ status: 'error', message: error.message })
+    const id = req.params.id
+    const productData = req.body
+    const updatedProduct = await productService.updateProduct(id, productData)
+    return res.status(201).json({
+      status: 'success',
+      msg: 'user uptaded',
+      data: updatedProduct
+    })
+  } catch (e) {
+    console.log(e)
+    return res.status(500).json({
+      status: 'error',
+      msg: 'something went wrong :(',
+      data: {}
+    })
   }
 })
 
-productRouter.delete('/:pid', async (req, res) => {
-  const id = req.params.pid
+productRouter.delete('/:id', async (req, res) => {
   try {
-    const products = await productManager.deleteProduct((id))
-    return res.status(200).json({ status: 'success', products })
-  } catch (error) {
-    return res.status(500).json({ status: 'success', message: error.message })
+    const id = req.params.id
+    // eslint-disable-next-line no-unused-vars
+    const deletedProduct = await productService.deleteProduct(id)
+    return res.status(200).json({
+      status: 'success',
+      msg: 'user deleted',
+      data: {}
+    })
+  } catch (e) {
+    console.log(e)
+    return res.status(500).json({
+      status: 'error',
+      msg: 'something went wrong :(',
+      data: {}
+    })
   }
 })

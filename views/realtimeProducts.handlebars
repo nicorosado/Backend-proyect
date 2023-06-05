@@ -2,16 +2,17 @@
     <h1>Product List with socket</h1>
     <div id="product-container" class="product-list">
       {{#each products}}
-      <div class="product" id="{{this.id}}">
+      <div class="product" id="{{this._id}}">
         <h2>{{this.title}}</h2>
         <img src={{this.thumbnails}} alt="">
         <p><strong>Price:</strong> ${{this.price}}</p>
         <p><strong>Stock:</strong> {{this.stock}}</p>
-        <button class="delete-btn" onclick="deleteProductWithSocket('{{this.id}}')">Delete</button>
+        <button class="delete-btn" onclick="deleteProductWithSocket('{{this._id}}')">Delete</button>
       </div>
       {{/each}}
     </div>
 </div>
+
 
   <form class="form" action="/realtimeProducts" method="POST">
     <div class="form-group">

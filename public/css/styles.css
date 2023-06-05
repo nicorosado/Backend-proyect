@@ -92,3 +92,7 @@
 .delete-btn:hover {
   background-color: #cc0000;
 }
+
+#swal2-input{
+  width: auto;
+}

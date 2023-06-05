@@ -1,12 +1,13 @@
+/* eslint-disable space-before-function-paren */
 import fs from 'fs'
 import { v4 as uuid } from 'uuid'
 
 export class ProductManager {
-  constructor (path) {
+  constructor(path) {
     this.path = path
   }
 
-  async addProduct (product) {
+  async addProduct(product) {
     if (
       !product.title ||
       !product.description ||
@@ -40,16 +41,16 @@ export class ProductManager {
     }
   }
 
-  async getProductById (id) {
+  async getProductById(id) {
     const products = await this.getProducts()
-    const found = products.find((product) => product.id === id)
+    const found = products.find((product) => product._id === id)
     if (!found) {
       throw new Error('Product not found on that id')
     }
     return found
   }
 
-  async getProducts () {
+  async getProducts() {
     try {
       const productString = await fs.promises.readFile(this.path, 'utf-8')
       const products = JSON.parse(productString)
@@ -59,9 +60,9 @@ export class ProductManager {
     }
   }
 
-  async updateProduct (id, newValues) {
+  async updateProduct(id, newValues) {
     const products = await this.getProducts()
-    const productIndex = products.findIndex((product) => product.id === id)
+    const productIndex = products.findIndex((product) => product._id === id)
 
     if (productIndex === -1) {
       throw new Error('Product not found on that id')
@@ -83,10 +84,9 @@ export class ProductManager {
     }
   }
 
-  async deleteProduct (id) {
+  async deleteProduct(id) {
     const products = await this.getProducts()
-    const productIndex = products.findIndex((product) => product.id === id)
-
+    const productIndex = products.findIndex((product) => product._id === id)
     if (productIndex === -1) {
       throw new Error('Product not found to delete')
     }
