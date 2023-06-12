@@ -1,19 +1,29 @@
 import express from 'express'
 import ProductService from '../services/products.service.js'
-const productService = new ProductService()
 
+const productService = new ProductService()
 export const productRouter = express.Router()
+
 productRouter.get('/', async (req, res) => {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const limit = req.query.limit
-    const products = await productService.getAllProducts()
-    res.status(200).json({ status: 'success', payload: products })
+    const limit = parseInt(req.query.limit) || 10
+    const page = parseInt(req.query.page) || 1
+    const sort = req.query.sort || ''
+    const query = req.query.query || ''
+
+    const result = await productService.getProducts({
+      limit,
+      page,
+      sort,
+      query
+    })
+
+    res.status(200).json({ status: 'success', ...result })
   } catch (error) {
+    console.error(error)
     res.status(500).json({ status: 'error', message: 'error' })
   }
 })
-
 productRouter.get('/:pid', async (req, res) => {
   try {
     const id = req.params.pid

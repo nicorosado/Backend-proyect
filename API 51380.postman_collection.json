@@ -10,6 +10,35 @@
 			"name": "products",
 			"item": [
 				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"title\": \"producto prueba final\",\r\n    \"description\": \"mongoose probano.\",\r\n    \"price\": 79.99,\r\n    \"code\": \"ZV01207\",\r\n    \"stock\": 10,\r\n    \"thumbnails\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get all",
 					"request": {
 						"method": "GET",
@@ -24,65 +53,23 @@
 							"path": [
 								"api",
 								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"otroproducto\",\r\n    \"description\": \"comida\",\r\n    \"price\": 2421,\r\n    \"code\": 213,\r\n    \"stock\": 36\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/products",
-							"protocol": "http",
-							"host": [
-								"localhost"
 							],
-							"port": "8080",
-							"path": [
-								"api",
-								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "modify",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"procucto\",\r\n    \"description\": \"modificado445\",\r\n    \"price\": 2421,\r\n    \"thumbnail\": \"http://dummyimage.com/244x100.png/5fa2dd/ffffff\",\r\n    \"code\": 92121,\r\n    \"stock\": 36\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"query": [
+								{
+									"key": "query",
+									"value": "running",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": null,
+									"disabled": true
 								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/products/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"products",
-								"2"
 							]
 						}
 					},
@@ -120,7 +107,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/products/95226382576129",
+							"raw": "http://localhost:8080/api/products/64823721f64c75298a0d6665",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -129,7 +116,37 @@
 							"path": [
 								"api",
 								"products",
-								"95226382576129"
+								"64823721f64c75298a0d6665"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modify",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"modificando again\",\r\n    \"description\": \"Zapatillas urbanas de color negro para uso casual.\",\r\n    \"price\": 44.99,\r\n    \"code\": \"ZU21008\",\r\n    \"stock\": 25,\r\n    \"thumbnails\": [\r\n                \"/thumbnails/1683739341558-443152906-images.jpg\",\r\n                \"/thumbnails/1683739341559-19739767-licensed-image.jpg\"\r\n            ],\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/647e66d3db72498b0879ed88",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"647e66d3db72498b0879ed88"
 							]
 						}
 					},
@@ -141,7 +158,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/products/7",
+							"raw": "http://localhost:8080/api/products/647e581dee1e7b23497e6f69",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -150,7 +167,7 @@
 							"path": [
 								"api",
 								"products",
-								"7"
+								"647e581dee1e7b23497e6f69"
 							]
 						}
 					},
@@ -192,6 +209,38 @@
 					"response": []
 				},
 				{
+					"name": "add product by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/6487998eeb73dffafea0433b/product/64823721f64c75298a0d665f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"6487998eeb73dffafea0433b",
+								"product",
+								"64823721f64c75298a0d665f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get by id",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -209,7 +258,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/carts/9545006858972",
+							"raw": "http://localhost:8080/api/carts/648797362817c93857ce189d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -218,16 +267,16 @@
 							"path": [
 								"api",
 								"carts",
-								"9545006858972"
+								"648797362817c93857ce189d"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "add product by id",
+					"name": "delete product by id",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -239,7 +288,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/carts/9545006858972/product/70061227050044",
+							"raw": "http://localhost:8080/api/carts/647e69ffed9b6bffca5c3ce9/products/64823721f64c75298a0d6677",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -248,9 +297,101 @@
 							"path": [
 								"api",
 								"carts",
-								"9545006858972",
-								"product",
-								"70061227050044"
+								"647e69ffed9b6bffca5c3ce9",
+								"products",
+								"64823721f64c75298a0d6677"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "empty cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/648750c12661a9644d0497af",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"648750c12661a9644d0497af"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update by array",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    { \"_id\": \"64823721f64c75298a0d6660\", \"quantity\": 10 }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/648750c22661a9644d0497b1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"648750c22661a9644d0497b1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update by quantity",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"quantity\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/648750c22661a9644d0497b1/products/64823721f64c75298a0d6660",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"648750c22661a9644d0497b1",
+								"products",
+								"64823721f64c75298a0d6660"
 							]
 						}
 					},

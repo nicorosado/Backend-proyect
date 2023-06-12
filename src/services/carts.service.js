@@ -15,7 +15,7 @@ export default class CartService {
 
   async getCartById(cartId) {
     try {
-      const cart = await CartModel.findById(cartId)
+      const cart = await CartModel.findOne({ _id: cartId }).populate('products.productId').lean()
       return cart
     } catch (error) {
       throw error
@@ -24,21 +24,23 @@ export default class CartService {
 
   async addProductToCart(cartId, productId) {
     try {
-      const product = await ProductModel.findById(productId)
+      const product = await ProductModel.findOne({ _id: productId })
       if (!product) {
+        console.log('no product')
         throw new Error('Product not found')
       }
-      const cart = await CartModel.findById(cartId)
+      const cart = await CartModel.findOne({ _id: cartId })
       if (!cart) {
+        console.log('no cart')
         throw new Error('Cart not found')
       }
-      const existingProduct = cart.products.find(product => product._id.toString() === productId)
+      const existingProduct = cart.products.find(product => productId.toString() === productId)
       if (existingProduct) {
         existingProduct.quantity += 1
       } else {
-        cart.products.push({ _id: productId, quantity: 1 })
+        cart.products.push({ productId })
       }
-      const savedCart = await cart.save()
+      const savedCart = (await cart.save()).populate('products.productId')
       return savedCart
     } catch (error) {
       throw error
@@ -47,7 +49,7 @@ export default class CartService {
 
   async removeProductFromCart(cartId, productId) {
     try {
-      const cart = await CartModel.findById(cartId)
+      const cart = await CartModel.findOne({ _id: cartId })
       if (!cart) {
         throw new Error('Cart not found')
       }
@@ -70,13 +72,51 @@ export default class CartService {
     }
   }
 
-  async deleteCartById(cartId) {
+  async clearCart(cartId) {
     try {
-      const cart = await CartModel.findByIdAndDelete(cartId)
+      const cart = await CartModel.findOne({ _id: cartId })
       if (!cart) {
         throw new Error('Cart not found')
       }
-      return cart
+      cart.products = []
+      const clearedCart = await cart.save()
+      return clearedCart
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateCart(cartId, products) {
+    try {
+      const cart = await CartModel.findOne({ _id: cartId })
+      if (!cart) {
+        throw new Error('Cart not found')
+      }
+      cart.products = products.map((product) => ({
+        productId: product._id,
+        quantity: product.quantity
+      }))
+      const updatedCart = (await cart.save()).populate('products.productId')
+      return updatedCart
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateProductQuantity(cartId, productId, quantity) {
+    try {
+      const cart = await CartModel.findOne({ _id: cartId })
+      if (!cart) {
+        throw new Error('Cart not found')
+      }
+      const productIndex = cart.products.findIndex(product => productId.toString() === productId)
+      if (productIndex === -1) {
+        throw new Error('Product not found in the cart')
+      }
+      const updatedQuantity = cart.products[productIndex].quantity + quantity
+      cart.products[productIndex].quantity = updatedQuantity
+      const updatedCart = (await cart.save()).populate('products.productId')
+      return updatedCart
     } catch (error) {
       throw error
     }

@@ -1,0 +1,17 @@
+  <div class="cart-container">
+    <h1>Cart</h1>
+    <h2>Cart ID: {{cart._id}}</h2>
+    <h3>Products:</h3>
+    <ul class="product-list">
+      {{#each cart.products}}
+      <li class="product-item">
+        <h4 class="product-title">{{this.productId.title}}</h4>
+        <p class="product-quantity">Quantity: {{this.quantity}}</p>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io()
+</script>

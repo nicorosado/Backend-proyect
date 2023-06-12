@@ -5,6 +5,7 @@ import { cartRouter } from './routes/carts.router.js'
 import { clientRouter } from './routes/client.router.js'
 import { connectMongo, connectSocket } from './config/utils.js'
 import { chatRouter } from './routes/chats.router.js'
+import session from 'express-session'
 
 const app = express()
 const PORT = 8080
@@ -19,7 +20,13 @@ connectSocket(httpServer)
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', './views')
-
+app.use(
+  session({
+    secret: 'mysecretkey',
+    resave: false,
+    saveUninitialized: false
+  })
+)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))

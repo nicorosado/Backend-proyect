@@ -1,3 +1,4 @@
+/* eslint-disable space-before-function-paren */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 const form = document.querySelector('.form')
@@ -71,6 +72,50 @@ try {
     }
   })
 } catch (e) { }
+
+async function addToCart(productId) {
+  try {
+    let cartId = localStorage.getItem('cartId')
+    if (!cartId) {
+      const response = await fetch('http://localhost:8080/api/carts', {
+        method: 'POST'
+      })
+      const data = await response.json()
+      cartId = data.payload._id
+      localStorage.setItem('cartId', cartId)
+    }
+    console.log('=======================', cartId)
+    console.log('=======================', productId)
+    await fetch(`http://localhost:8080/api/carts/${cartId}/product/${productId}`, { method: 'POST' })
+    alert('product added correctly')
+    // updateCartBadge()
+  } catch (error) {
+    alert('failed to add to cart')
+  }
+}
+
+async function updateCartBadge() {
+  try {
+    const cartId = localStorage.getItem('cartId')
+    if (!cartId) {
+      document.getElementById('badgeCart').textContent = ''
+      return
+    }
+
+    const response = await fetch(`http://localhost:8080/api/carts/${cartId}`)
+    const data = await response.json()
+
+    if (data.payload && data.payload[0] && data.payload[0].products) {
+      const cart = data.payload[0]
+      const itemCount = cart.products.length
+      document.getElementById('badgeCart').textContent = itemCount.toString()
+    } else {
+      document.getElementById('badgeCart').textContent = ''
+    }
+  } catch (error) {
+    document.getElementById('badgeCart').textContent = ''
+  }
+}
 
 // eslint-disable-next-line prefer-const
 let userMail = ''
