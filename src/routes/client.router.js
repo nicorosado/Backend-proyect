@@ -26,13 +26,6 @@ clientRouter.get('/realtimeProducts', async (req, res) => {
 
 clientRouter.get('/products', async (req, res) => {
   try {
-    /* let cartId = req.cookies.cartId
-
-    if (!cartId) {
-      const newCart = await cartService.createCart()
-      cartId = newCart._id
-      res.cookie('cartId', cartId)
-    } */
     const limit = parseInt(req.query.limit) || 10
     const page = parseInt(req.query.page) || 1
     const sort = req.query.sort || ''

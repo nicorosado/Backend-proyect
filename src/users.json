@@ -1,0 +1,30 @@
+[
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "pass": "asd",
+      "isAdmin": true
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane@example.com",
+      "pass": "asd",
+      "isAdmin": false
+    },
+    {
+      "firstName": "Michael",
+      "lastName": "Johnson",
+      "email": "michael@example.com",
+      "pass": "asd",
+      "isAdmin": false
+    },
+    {
+      "firstName": "Emily",
+      "lastName": "Davis",
+      "email": "emily@example.com",
+      "pass": "asd",
+      "isAdmin": false
+    }
+  ]
