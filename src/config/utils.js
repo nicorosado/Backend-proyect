@@ -4,6 +4,9 @@ import { connect } from 'mongoose'
 import { Server } from 'socket.io'
 import { ProductModel } from '../models/products.model.js'
 import { MessageModel } from '../models/messages.model.js'
+
+// ----------Bcrypt--------------
+import bcrypt from 'bcrypt'
 export async function connectMongo() {
   try {
     await connect(
@@ -51,3 +54,5 @@ export function connectSocket(httpServer) {
     })
   })
 }
+export const createHash = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+export const isValidPassword = (password, hashPassword) => bcrypt.compareSync(password, hashPassword)

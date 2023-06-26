@@ -20,7 +20,7 @@ const schema = new Schema({
         unique: true
     },
 
-    pass: {
+    password: {
         type: String,
         required: true,
         max: 100
@@ -28,7 +28,8 @@ const schema = new Schema({
 
     isAdmin: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     }
 })
 schema.plugin(monsoosePaginate)

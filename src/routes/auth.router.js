@@ -1,7 +1,7 @@
 import express from 'express'
-import { UserModel } from '../models/users.model.js'
 // import { UserService } from '../services/users.service.js';
 import { isAdmin, isUser } from '../middlewares/auth.js'
+import passport from 'passport'
 export const authRouter = express.Router()
 
 authRouter.get('/logout', (req, res) => {
@@ -14,7 +14,7 @@ authRouter.get('/logout', (req, res) => {
 })
 
 authRouter.get('/profile', isUser, (req, res) => {
-  const user = { email: req.session.email, isAdmin: req.session.isAdmin }
+  const user = req.session.user
   return res.render('profile', { user })
 })
 
@@ -26,19 +26,15 @@ authRouter.get('/login', (req, res) => {
   return res.render('login', {})
 })
 
-authRouter.post('/login', async (req, res) => {
-  const { email, pass } = req.body
-  if (!email || !pass) {
-    return res.status(400).render('error', { error: 'put your email and pass' })
-  }
-  const foundUser = await UserModel.findOne({ email })
-  if (foundUser && foundUser.pass === pass) {
-    req.session.email = foundUser.email
-    req.session.isAdmin = foundUser.isAdmin
-
-    return res.redirect('/auth/profile')
-  } else {
-    return res.status(401).render('error', { error: 'email or pass are wrong' })
+authRouter.post('/login', passport.authenticate('login', { failureRedirect: '/auth/faillogin' }), async (req, res) => {
+  if (!req.user) {
+    return res.json({ error: 'invalid credentials' })
+  } try {
+    req.session.user = { _id: req.user._id, email: req.user.email, firstName: req.user.firstName, lastName: req.user.lastName, isAdmin: req.user.isAdmin }
+    return res.json({ msg: 'ok', payload: req.user })
+  } catch (e) {
+    console.log(e)
+    return res.status(400).render('error', { error: 'couldnt login' })
   }
 })
 
@@ -46,19 +42,28 @@ authRouter.get('/register', (req, res) => {
   return res.render('register', {})
 })
 
-authRouter.post('/register', async (req, res) => {
-  const { email, pass, firstName, lastName } = req.body
-  if (!email || !pass || !firstName || !lastName) {
-    return res.status(400).render('error', { error: 'wrong data' })
+authRouter.post('/register', passport.authenticate('register', { failureRedirect: '/auth/failregister' }), async (req, res) => {
+  if (!req.user) {
+    return res.json({ error: 'something went wrong' })
   }
   try {
-    await UserModel.create({ email, pass, firstName, lastName, isAdmin: false })
-    req.session.email = email
-    req.session.isAdmin = false
+    req.session.user = { _id: req.user._id, email: req.user.email, firstName: req.user.firstName, lastName: req.user.lastName, isAdmin: req.user.isAdmin }
 
-    return res.redirect('/auth/profile')
+    return res.json({ msg: 'ok', payload: req.user })
   } catch (e) {
     console.log(e)
     return res.status(400).render('error', { error: 'couldnt create user. Try with another mail' })
   }
+})
+
+authRouter.get('/failregister', async (req, res) => {
+  return res.json({ error: 'fail to register' })
+})
+
+authRouter.get('/session', (req, res) => {
+  return res.send(JSON.stringify(req.session))
+})
+
+authRouter.get('/faillogin', async (req, res) => {
+  return res.json({ error: 'fail to login' })
 })

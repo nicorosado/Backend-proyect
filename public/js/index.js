@@ -1,6 +1,7 @@
 /* eslint-disable space-before-function-paren */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+import fetch from 'node-fetch'
 const form = document.querySelector('.form')
 const titleInput = document.getElementById('title')
 const descriptionInput = document.getElementById('description')
