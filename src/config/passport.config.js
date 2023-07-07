@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable space-before-function-paren */
 import passport from 'passport'
 import local from 'passport-local'
@@ -5,29 +6,55 @@ import { UserModel } from '../models/users.model.js'
 import { createHash, isValidPassword } from './utils.js'
 import GitHubStrategy from 'passport-github2'
 import fetch from 'node-fetch'
+import CartService from '../services/carts.service.js'
 
 const LocalStrategy = local.Strategy
+const cartService = new CartService()
 
 export function iniPassport() {
   passport.use(
     'login',
-    new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
-      try {
-        const user = await UserModel.findOne({ email: username })
-        if (!user) {
-          console.log('User Not Found with username (email) ' + username)
-          return done(null, false)
-        }
-        if (!isValidPassword(password, user.password)) {
-          console.log('Invalid Password')
-          return done(null, false)
-        }
+    new LocalStrategy(
+      {
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true
+      },
+      async (req, username, password, done) => {
+        try {
+          const { email, password } = req.body
+          if (!email || !password) {
+            req.flash('error', 'Por favor indique su email y password.')
+            return done(null, false)
+          }
 
-        return done(null, user)
-      } catch (err) {
-        return done(err)
+          const user = await UserModel.findOne({ email: username })
+          if (!user) {
+            req.flash('error', 'Por favor indique su email y password.')
+            return done(null, false)
+          }
+
+          if (!isValidPassword(password, user.password)) {
+            req.flash(
+              'error',
+              'Por favor indique un email o password correcto.'
+            )
+            return done(null, false)
+          }
+
+          req.session.email = user.email
+          req.session.role = user.role
+          req.session.first_name = user.first_name
+          req.session.last_name = user.last_name
+          req.session.age = user.age
+          req.session.cartID = user.cartID
+
+          return done(null, user)
+        } catch (error) {
+          return done(new Error(error))
+        }
       }
-    })
+    )
   )
 
   passport.use(
@@ -39,21 +66,31 @@ export function iniPassport() {
       },
       async (req, username, password, done) => {
         try {
-          const { email, firstName, lastName } = req.body
+          const { email, first_name, last_name, age } = req.body
           const user = await UserModel.findOne({ email: username })
           if (user) {
             console.log('User already exists')
             return done(null, false)
           }
-
+          const newCart = await cartService.addCart()
+          const cartID = newCart.result.payload._id.toString()
           const newUser = {
             email,
-            firstName,
-            lastName,
+            first_name,
+            last_name,
             isAdmin: false,
+            age,
+            cartID,
+            role: 'user',
             password: createHash(password)
           }
           const userCreated = await UserModel.create(newUser)
+          req.session.email = email
+          req.session.role = 'user'
+          req.session.first_name = first_name
+          req.session.last_name = last_name
+          req.session.age = age
+          req.session.cartID = cartID
           console.log(userCreated)
           console.log('User Registration succesful')
           return done(null, userCreated)
@@ -93,15 +130,27 @@ export function iniPassport() {
 
           const user = await UserModel.findOne({ email: profile.email })
           if (!user) {
-            const newUser = {
+            const newCart = await cartService.addCart()
+            const cartID = newCart.result.payload._id.toString()
+
+            const displayName = profile.displayName
+              ? profile.displayName.split(' ')
+              : [profile.username]
+
+            const lastName = displayName[1] || 'nolastname'
+            const firstName = displayName[0] || 'noname'
+
+            const userCreated = await UserModel.create({
+              first_name: firstName,
+              last_name: lastName,
               email: profile.email,
-              firstName: profile._json.name || profile._json.login || 'noname',
-              lastName: 'nolast',
-              isAdmin: false,
-              password: 'nopass'
-            }
-            const userCreated = await UserModel.create(newUser)
-            console.log('User Registration succesful')
+              age: 18,
+              password: 'GitHub-User',
+              cartID,
+              role: 'user'
+            })
+
+            // Usuario Creado correctamente
             return done(null, userCreated)
           } else {
             console.log('User already exists')

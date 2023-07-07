@@ -14,9 +14,29 @@ authRouter.get('/logout', (req, res) => {
 })
 
 authRouter.get('/profile', isUser, (req, res) => {
-  const user = req.session.user
-  return res.render('profile', { user })
+  return res.render('profile', {
+    firstname: req.user.first_name,
+    lastname: req.user.last_name,
+    email: req.user.email,
+    isadmin: req.user.role,
+    age: req.user.age,
+    cartid: req.user.cartID
+  })
 })
+
+authRouter.get(
+  '/github/callback',
+  passport.authenticate('github', { failureRedirect: '/auth/failregister' }),
+  (req, res) => {
+    req.session.email = req.user.email
+    req.session.role = req.user.role
+    req.session.first_name = req.user.first_name
+    req.session.last_name = req.user.last_name
+    req.session.age = req.user.age
+    req.session.cartID = req.user.cartID
+    return res.redirect('/products')
+  }
+)
 
 authRouter.get('/administration', isUser, isAdmin, (req, res) => {
   return res.send('Data only seen by admins')
@@ -30,7 +50,7 @@ authRouter.post('/login', passport.authenticate('login', { failureRedirect: '/au
   if (!req.user) {
     return res.json({ error: 'invalid credentials' })
   } try {
-    req.session.user = { _id: req.user._id, email: req.user.email, firstName: req.user.firstName, lastName: req.user.lastName, isAdmin: req.user.isAdmin }
+    req.session.user = { _id: req.user._id, email: req.user.email, first_name: req.user.first_name, last_name: req.user.last_name, isAdmin: req.user.isAdmin }
     return res.json({ msg: 'ok', payload: req.user })
   } catch (e) {
     console.log(e)
@@ -47,7 +67,7 @@ authRouter.post('/register', passport.authenticate('register', { failureRedirect
     return res.json({ error: 'something went wrong' })
   }
   try {
-    req.session.user = { _id: req.user._id, email: req.user.email, firstName: req.user.firstName, lastName: req.user.lastName, isAdmin: req.user.isAdmin }
+    req.session.user = { _id: req.user._id, email: req.user.email, first_name: req.user.first_name, last_name: req.user.last_name, isAdmin: req.user.isAdmin }
 
     return res.json({ msg: 'ok', payload: req.user })
   } catch (e) {

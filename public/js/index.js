@@ -85,8 +85,6 @@ async function addToCart(productId) {
       cartId = data.payload._id
       localStorage.setItem('cartId', cartId)
     }
-    console.log('=======================', cartId)
-    console.log('=======================', productId)
     await fetch(`http://localhost:8080/api/carts/${cartId}/product/${productId}`, { method: 'POST' })
     alert('product added correctly')
     // updateCartBadge()

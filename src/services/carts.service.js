@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-catch */
+import mongoose from 'mongoose'
 import { CartModel } from '../models/carts.model.js'
 import { ProductModel } from '../models/products.model.js'
 
@@ -119,6 +120,64 @@ export default class CartService {
       return updatedCart
     } catch (error) {
       throw error
+    }
+  }
+
+  async addCart(cartId, prodId) {
+    try {
+      if (cartId === undefined || prodId === undefined) {
+        const newCart = await CartModel.create({})
+        return { status: 200, result: { status: 'success', payload: newCart } }
+      } else {
+        if (
+          !mongoose.Types.ObjectId.isValid(prodId) ||
+          !mongoose.Types.ObjectId.isValid(cartId)
+        ) {
+          return {
+            status: 400,
+            result: {
+              status: 'error',
+              error: '🛑 Invalid product or card ID.'
+            }
+          }
+        }
+      }
+
+      const productFiltered = await ProductModel.findOne({ _id: prodId })
+      const cartFiltered = await CartModel.findOne({ _id: cartId })
+
+      if (!productFiltered || !cartFiltered) {
+        return {
+          status: 400,
+          result: {
+            status: 'error',
+            error: '🛑 Product or Cart not found.'
+          }
+        }
+      }
+
+      const productIndex = cartFiltered.products.findIndex((p) =>
+        p.id.equals(prodId)
+      )
+
+      if (productIndex !== -1) {
+        cartFiltered.products[productIndex].quantity += 1
+      } else {
+        cartFiltered.products.push({ id: prodId, quantity: 1 })
+      }
+
+      await cartFiltered.save()
+
+      return {
+        status: 200,
+        result: { succes: true, payload: cartFiltered }
+      }
+    } catch (err) {
+      console.log(err)
+      return {
+        status: 500,
+        result: { status: 'error', msg: 'Internal Server Error', payload: {} }
+      }
     }
   }
 }
