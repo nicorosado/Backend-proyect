@@ -1,0 +1,76 @@
+<h1>Todo listo para trabajar con sockets</h1>
+<h2>Agregar producto</h2>
+
+<section class="main-cont">
+     <div>
+        <form  id="add-product" >
+      
+        <label for="title">Title
+            <input type="text" name="title" id="title" required />
+        </label>
+        <label for="description">Description
+            <textarea  type="text" name="description" id="description" required ></textarea>
+        </label>
+        <label for="price">Price
+            <input type="number" name="price" id="price" required />
+        </label>
+        <label for="code">Code
+            <input type="text" name="code" id="code" required />
+        </label>
+        <label for="stock">Stock
+            <input type="number" name="stock" id="stock" required />
+        </label>
+        <label for="category">Category
+            <input type="text" name="category" id="category" required />
+        </label>
+        <label for="thumbnail">Thumbnail
+            <input type="file" name="thumbnail" id="thumbnail" required />
+        </label>
+        <button type="submit" id="button">Enviar</button>
+    </form>
+    <h3>Eliminar Producto por id</h3>
+      <form  id="delet-product" >
+      
+        <label for="id">Id
+            <input type="text" name="id" id="id" required />
+        </label>
+        
+        <button type="submit" id="button">Enviar</button>
+    </form>
+    
+    <div class="chat">
+    <div class="data" id="data-user">
+        <h2>Ingresar sus datos</h2>
+        <label for="user">Name
+        <input type="text" name="user" id="user" required>
+        </label>
+        <label for="email">Email
+        <input type="email" name="email" id="email" required>
+        </label>
+        <input type="button" value="Guardar" id="btn-guardar">
+        
+        </div>
+<section class="div_hide" id="chat-soc">
+    <h3>Chat</h3>
+    <div class="msgs" id="div-msgs"></div>
+    <p class="txt-msg">Escribe tu mensaje</p>
+    <div>
+        <input type="text" name="msg" id="msg">
+        <input type="button" value="Enviar" id="btn-enviar">
+    </div>
+</section>
+   
+    
+    </div>
+        </div> 
+       
+    <ul id="products-life">
+
+    </ul>
+
+</section>
+
+
+<script src="/socket.io/socket.io.js"></script>
+ <script src="index.js"></script>
+

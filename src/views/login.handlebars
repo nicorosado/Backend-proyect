@@ -1,0 +1,50 @@
+<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<div class="brand_logo_container">
+						<img src="https://cdn.freebiesupply.com/logos/large/2x/pinterest-circle-logo-png-transparent.png" class="brand_logo" alt="Logo">
+					</div>
+				</div>
+                    <div>
+                        <h4 class="log">Login con</h4>
+                    <a href="/api/sessions/github" class="log-git"><i class="bi bi-github"></i> </a>
+                        <h4 class="log">o  Usuario y contraseña</h4>
+
+                    </div>
+				<div class="d-flex justify-content-center form_container">
+                <form action="/auth/login" method="POST">
+                        {{!-- firstName --}}
+                        {{!-- EMAIL --}}
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="bi bi-envelope-at"></i></span>
+							</div>
+                            <input type="text" name="email" placeholder="email" class="form-control input_pass"> 
+						</div>
+                       
+                        {{!-- PASSWORD --}}
+       	                <div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="bi bi-key"></i></span>
+							</div>
+                        <input type="text" name="password" placeholder="password" class="form-control input_pass"> 
+						</div>
+
+							<div class="d-flex justify-content-center mt-3 login_container">
+                                <input type="submit" value="login" class="btn login_btn"/>
+				   </div>
+					</form>
+				</div>
+		
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Dont you  have an account?? <a href="/auth/register" class="ml-2">Sign Up</a>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+

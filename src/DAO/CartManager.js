@@ -1,76 +1,113 @@
 import fs from 'fs'
-import { v4 as uuid } from 'uuid'
+import productManager from './productManager.js';
 
-export class CartManager {
-  constructor (path) {
-    this.path = path
-  }
+class CartManager {
+    constructor(path) {
+        this.path = path;
+        this.carts = [];
+    }
 
-  async saveCarts (carts) {
-    const data = JSON.stringify(carts, null, 2)
-    await fs.promises.writeFile(this.path, data)
-  }
+    async getCarts(){
+        if (fs.existsSync(this.path)) {
+                    const cartsString = await fs.promises.readFile(this.path, "utf-8");
+                    const carts = JSON.parse(cartsString);
+                    this.carts = carts;
 
-  async getAllCarts () {
-    try {
-      const data = await fs.promises.readFile(this.path, 'utf-8')
-      return JSON.parse(data)
-    } catch (error) {
-      return []
+                } else {
+                    await fs.promises.writeFile(this.path, "[]");
+                    const cartsString = await fs.promises.readFile(this.path, "utf-8");
+                    const carts = JSON.parse(cartsString);
+                    this.carts = carts;
+                }
+                return this.carts
+            
     }
-  }
 
-  async createNewCart () {
-    const newCart = {
-      id: uuid(),
-      products: []
-    }
-    const carts = await this.getAllCarts()
-    carts.push(newCart)
-    await this.saveCarts(carts)
-    return newCart
-  }
+        async addCart(idCart){
+            let carts = await this.getCarts();
+            let products =  [];
+            if (carts.some((cart) => cart.id === idCart)) {
+                 return { error: `el cart  con id: ",${idCart}, existe` };
+            }
+            let id = idCart;
+            let newCart = {id,products}
+            carts.push(newCart);
+            const cartsString = JSON.stringify(carts, null, 2);
+            await fs.promises.writeFile(this.path, cartsString);
 
-  async getCartById (cartId) {
-    const carts = await this.getAllCarts()
-    const cart = carts.find((cart) => cart.id === cartId)
-    if (!cart) {
-      throw new Error(`cart with id ${cartId} not found`)
-    }
-    return cart.products
-  }
+            return newCart;
 
-  async addProductToCart (cartId, productId, quantity = 1) {
-    const carts = await this.getAllCarts()
-    const cart = carts.find((cart) => cart.id === cartId)
-    if (!cart) {
-      throw new Error('cart doesnt exists')
-    }
-    const existingProduct = cart.products.find(
-      (product) => product.id === productId
-    )
-    if (existingProduct) {
-      existingProduct.quantity += quantity
-    } else {
-      cart.products.push({ id: productId, quantity })
-    }
-    await this.saveCarts(carts)
-    return cart
-  }
+        }
+        async addPrdoductToCart(idCart,idProduct){
+            try{
+                let data = await this.getCarts();
+                let cart = await this.getCartById(idCart);
+                if(cart){
+                    let product= await productManager.getProductsById(idProduct);
+                    if(product){
+                     const producFind = cart.products.find( product => product.idProduct === idProduct);
+                     if(producFind){
+                        producFind.quantity = producFind.quantity +1  ;
+                        let cartIndex = data.findIndex(cart => cart.id === idCart)
+                        data.splice(cartIndex, 1, cart)
+                        const cartString = JSON.stringify(data, null, 2)
+                        await fs.promises.writeFile(this.path, cartString); 
+                        return cart;
+                }
+                    cart.products.push({idProduct: idProduct, quantity: 1})
+                    let cartIndex = data.findIndex(cart => cart.id === idCart)
+                    data.splice(cartIndex, 1, cart)
+                    const cartString = JSON.stringify(data, null, 2)
+                    await fs.promises.writeFile(this.path, cartString);
+                    return cart; 
+            }
+            return {error: "producto no existe"}
+            }
+                return {error: "cart no existe"}
+            
+           }
+           catch (e) {
+            return new Error(e);
+        }
+        }
 
-  async removeProduct (cartId, productId) {
-    const carts = await this.getAllCarts()
-    const cart = carts.find((cart) => cart.id === cartId)
-    if (!cart) {
-      throw new Error(`cart with id ${cartId} not found`)
-    }
-    const productIndex = cart.products.findIndex(
-      (product) => product.id === productId
-    )
-    if (productIndex === -1) {
-      throw new Error(`product ${productId} not found in cart ${cartId}`)
-    }
-    cart.products.splice(productIndex, 1)
-    await this.saveCarts(carts)
-  }
+        async getCartById(idSearch){
+            try {
+                let data = await this.getCarts();
+                const cartByid = await this.getCartIndex(idSearch);
+                if(cartByid) {
+                     return cartByid; 
+                                }   
+    
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
+        async getCartIndex(idSearch){
+            let data = await this.getCarts();
+            try {
+                const cartIndexByid = data.find(element => element.id === idSearch);
+
+                if(cartIndexByid) {
+                    
+                     return cartIndexByid; 
+                                }   
+    
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
+
+
+
+
 }
+ 
+ 
+
+//const cart = new CartManager("./src/persistencia/carts.json");
+
+
+
+export default new CartManager("./src/persistencia/carts.json");
+

@@ -1,0 +1,90 @@
+
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<div class="brand_logo_container">
+						<img src="https://cdn.freebiesupply.com/logos/large/2x/pinterest-circle-logo-png-transparent.png" class="brand_logo" alt="Logo">
+					</div>
+				</div>
+                 <div>
+                        <h4 class="log">Registrarse con</h4>
+                    <a href="/api/sessions/github" class="log-git"><i class="bi bi-github"></i> </a>
+                        <h4 class="log">o Crear Usuario y contraseña</h4>
+
+                    </div>
+				<div class="d-flex justify-content-center form_container">
+
+                    <form action="/auth/register" method="POST">
+                        {{!-- firstName --}}
+                        <h4>Completar los datos</h4>
+
+						<div class="input-group mb-3">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="bi bi-person-circle"></i></span>
+							</div>
+                            <input type="text" name="firstName" placeholder="firstName" class="form-control input_user"> 
+						</div>
+                        {{!-- lastName --}}
+                        <div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="bi bi-person-bounding-box"></i></span>
+							</div>
+                            <input type="text" name="lastName" placeholder="lastName" class="form-control input_pass"> 
+						</div>
+                        {{!-- EMAIL --}}
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="bi bi-envelope-at"></i></span>
+							</div>
+                            <input type="text" name="email" placeholder="email" class="form-control input_pass"> 
+						</div>
+                        {{!-- EDAD --}}
+                     	<div class="input-group mb-2">
+                
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="bi bi-clock"></i></span>
+							</div>
+                            <input type="Number" name="age" placeholder="age" class="form-control input_pass">
+						</div>
+                        {{!-- PASSWORD --}}
+       	                <div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="bi bi-key"></i></span>
+							</div>
+                        <input type="text" name="password" placeholder="password" class="form-control input_pass"> 
+						</div>
+
+							<div class="d-flex justify-content-center mt-3 login_container">
+                                <input type="submit" value="Register" class="btn login_btn"/>
+
+				   </div>
+					</form>
+				</div>
+		
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Do you already have an account?? <a href="/auth/login" class="ml-2">Sign On</a>
+					</div>
+                    <div class="hogar">
+                        <a href="/products" class="ml-2">Home</a>
+
+                    </div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{{!-- <form action="/auth/register" method="POST">
+<input type="text" name="email" placeholder="email"> 
+<input type="text" name="password" placeholder="password"> 
+<input type="text" name="firstName" placeholder="firstName"> 
+<input type="text" name="lastName" placeholder="lastName"> 
+<input type="Number" name="age" placeholder="age"> 
+
+<input type="submit" value="registrarse"/>
+
+</form>
+<a href="/auth/login">Ya tengo cuenta</a> --}}

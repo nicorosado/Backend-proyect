@@ -1,0 +1,27 @@
+<h1>Carrito</h1>
+<section class="cart">
+    <h3>Este es tu carrito podras ver lo que estas comprando</h3>
+
+ <ul class="list-products">   
+     {{#each products}}
+         <li class="card-cart">  
+            <div class="card-img">
+                <div class="img-div"> 
+                <img class="img-card" src='/img{{this.thumbnail}}'/>
+            </div>
+            </div>         
+           <div class="info-card">
+            <h3 class="title-card">{{this.title}}</h5> 
+            <p class="description-card">{{this.description}}   </p>
+            <p class="cantidad"><b>Cantidad</b> {{this.quantity}}   </p>
+            <p class="price-card"><b>$</b> {{this.price}} </p>
+            <p class="price-card"><b>Subtotal</b>: <b>$</b> {{this.subtotal}} </p>
+            <a type="button" onclick='deletProductToCart({{../cartString}},"{{this.id}}") ' value="{{this.id}}" class="deletToCart" id='{{this.id}}'><i class="bi bi-trash"></i></a>
+
+           </div>
+
+         </li>
+    {{/each}} 
+    <script></script>
+    </ul>
+</section>

@@ -1,10 +1,16 @@
-import express from 'express'
-export const viewsRouter = express.Router()
+import  express  from "express";
+export const viewsRouter = express.Router();
+import { viewsController } from "../controller/views.controller.js";
 
-viewsRouter.get('/', async (req, res) => {
-  res.render('home')
-})
 
-viewsRouter.get('/login', async (req, res) => {
-  res.render('login-github')
-})
+viewsRouter.get('/products', viewsController.getAll);
+
+viewsRouter.get("/cart/:cid" ,  viewsController.getCardbyId)
+
+viewsRouter.get("/show-session" , viewsController.showSession )
+
+viewsRouter.get('/logout', viewsController.logout)
+
+              
+  
+  

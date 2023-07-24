@@ -1,0 +1,116 @@
+ <div class="btnPerfil">
+
+
+ {{#if firstNameUser}}
+<p class=""  ><a class="btn" href="/auth/perfil"> Hola {{firstNameUser}} </a> <a class="logout" href="/auth/logout">Cerrar sesion</a> </p>
+{{else}}
+<p class=""  ><a class="btn" href="/auth/login"> Iniciar Sesion </a> </p>
+
+{{/if}}
+    <a href="" id="view-cart"><i class="bi bi-cart"></i>
+<span id="carritoCantidad">0</span>
+</a>
+
+ </div>
+
+<h1>Home</h1>
+
+<h3 class="title-filter">Filtros por Categoria </h3>
+<div class="d-flex">
+    <div class="checks">
+        <a href="/products?page=1&category=computadora">
+        Computadora</a>
+    </div>
+    <div  class="checks">
+        <a href="/products?page=1&category=audio">
+        Parlantes   </a>
+    </div>
+    <div class="checks">
+        <a href="/products?page=1&category=componentes">
+        Componentes</a> 
+    </div>
+     <div class="checks">
+        <a href="/products?page=1">
+        Todos los productos</a> 
+    </div> <label class="price" for="price">Precio
+        <input type="number" name="price" id="pricefilter" >
+        </label>
+<h4>Ordenar</h4>
+<a href="{{pagination.orderAscLink}}">Ascendente</a>
+<a href="{{pagination.orderDescLink}}"> Descendente</a>
+ 
+
+</div>
+
+
+
+
+  <ul>   
+     {{#each products}}
+         <li class="card">           
+            <div class="img-div"> 
+               <img class="img-card" src='/img{{this.thumbnail}}'/>
+            </div>
+           
+            <h3 class="title-card">{{this.title}}</h5> 
+            <p class="description-card">{{this.description}}   </p>
+            <p class="price-card"><b>$</b> {{this.price}} </p>
+            <a type="button" onclick='addProducttoCart("{{this.id}}") ' value="{{this.id}}" class="addToCart" id='{{this.id}}'>Agregar al Cart</a>
+
+         </li>
+    {{/each}} 
+    </ul>
+    <div class="pagination"> 
+        {{#if pagination.hasPrevPage}}
+            <a href="{{pagination.prevLink}}">
+             ⇚ {{pagination.prevPage}}
+            </a>
+        {{/if}}
+    {{pagination.page}}  
+
+    {{#if pagination.hasNextPage}}
+        <a href="{{pagination.nextLink}}"> 
+            {{pagination.nextPage}}⇛
+        </a>
+    {{/if}}
+    </div>
+    <a href="" id="view-cart">Ver Carrito</a>
+    <section class="all-chat">
+
+    <div class="data" id="data-user">
+        <h1>Chat</h1>
+        <h2>Ingresar sus datos</h2>
+        <label for="user">Name
+        <input type="text" name="user" id="user" required>
+        </label>
+        <label for="email">Email
+        <input type="email" name="email" id="email" required>
+        </label>
+        <input type="button" value="Guardar" id="btn-guardar">
+        
+        </div>
+<section class="div_hide" id="chat-soc">
+    <h3>Chat</h3>
+    <div class="msgs" id="div-msgs"></div>
+    <p class="txt-msg">Escribe tu mensaje</p>
+    <div>
+        <input type="text" name="msg" id="msg">
+        <input type="button" value="Enviar" id="btn-enviar">
+    </div>
+</section>
+
+    </section>
+    <script src="/socket.io/socket.io.js"></script>
+
+{{!-- <div class="floating_menu" id="FloatMenu">
+    <div class="menu">
+        <ion-icon name="chatbox-outline"></ion-icon>
+    </div>
+    <div class="sub_menu">
+       <h1 class="inside">Hola</h1>
+    </div>
+</div>
+    <script src="/socket.io/socket.io.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+    </div> --}}
