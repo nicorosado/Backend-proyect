@@ -24,7 +24,7 @@ class ProductManager {
     }
 
     async addProduct(newProduct) {
-        let id = uuidv4(); 
+        let id = uuidv4();
 
         try {
             let products = await this.getProducts();
@@ -105,22 +105,7 @@ class ProductManager {
 }
 
 
-//const product1={
-//  "title": "Computadora",
-//"description": "Core I5",
-//"thumbnail": "imagen",
-// "price": 800,
-//"code": "nuevo-item",
-//"stock": "200"
-//}
 
-//const product = new ProductManager("./src/products.json");
-
-//async function async(){
-// await product.addProduct(product1)
-//await product.getProductsById(2);
-//}
-//async();
 
 export default new ProductManager("./src/persistencia/products.json");
 
