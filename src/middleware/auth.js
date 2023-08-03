@@ -1,4 +1,3 @@
-// Medialware Admin
 export function isUser(req, res, next) {
   if (req?.session?.user?.email) {
     return next()
