@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="card col-8" style="margin-top: 10vh; margin-bottom: 10vh;">
+    <div class="card-header">
+      <h2>Chat</h2>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Send Message</h5>
+      <div class="row" style="padding: 10px;">
+        <div class="col-10">
+          <input
+            id="messageInput"
+            class="form-control inputForms"
+            placeholder="Escribe tu mensaje aquí..."
+          />
+        </div>
+        <div class="col-2">
+          <button
+            id="sendMessageBtn"
+            class="btn btn-primary input-group-text-style"
+          >Send</button>
+        </div>
+      </div>
+      <div id="messageLogs" class="col-12">
+        Loading messages
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/indexChat.js"></script>

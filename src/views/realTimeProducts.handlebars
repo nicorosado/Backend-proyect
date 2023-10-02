@@ -1,0 +1,149 @@
+<div class="">
+  <div class="container productTable">
+    <div class="card col-12 overF_Hidden">
+      <div id="productList">
+        <div class="row" style="padding: 0px 0px 0px 5px;">
+          <div class="col-9 backgroundTable">
+            <h2 class="my-3">Products</h2>
+            <table class="table table-hover" style="margin: 5px 0px 20px 5px;">
+              <thead>
+                <tr>
+                  <th scope="col">Code</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Thumbnail</th>
+                </tr>
+              </thead>
+              <tbody id="dinamic-product-list">
+                {{#each products}}
+                  <tr>
+                    <td scope="row">{{this.code}}</td>
+                    <td>{{this.title}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.stock}}</td>
+                    <td>{{this.category}}</td>
+                    <td>{{this.thumbnail}}</td>
+                    <td><input
+                        type="submit"
+                        value="Delete"
+                        class="btn btn-danger"
+                        onclick="deleteProduct('{{this._id}}')"
+                      />
+                    </td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            <h5><a href="/dashboard" class="card-link">Back</a></h5>
+          </div>
+          <div
+            class="col-3"
+            style="border-left: 2px #ffc107 solid;padding:3px 25px 3px 10px;background-color: ghostwhite; "
+          >
+            <h2 class="text-center my-1">Add Product</h2>
+            <form id="formProducts" style="margin: auto">
+              <div style="margin-bottom: 10px">
+                <div class="col-12">
+                  <label for="title"> Title: </label>
+                  <br />
+                  <input
+                    type="text"
+                    name="title"
+                    id="formTitle"
+                    style="margin-bottom: 10px"
+                    class="form-control imputForms"
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="description"> Description: </label>
+                  <br />
+                  <input
+                    type="text"
+                    name="description"
+                    id="formDescription"
+                    style="margin-bottom: 10px"
+                    class="form-control imputForms"
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="price"> Price: </label>
+                  <br />
+                  <input
+                    type="number"
+                    name="price"
+                    id="formPrice"
+                    style="margin-bottom: 10px"
+                    class="form-control imputForms"
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="code"> Code: </label>
+                  <br />
+                  <input
+                    type="number"
+                    name="code"
+                    id="formCode"
+                    style="margin-bottom: 10px"
+                    class="form-control imputForms"
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="stock"> Stock: </label>
+                  <br />
+                  <input
+                    type="number"
+                    name="stock"
+                    id="formStock"
+                    style="margin-bottom: 10px"
+                    class="form-control imputForms"
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="category"> Category: </label>
+                  <br />
+                  <input
+                    type="text"
+                    name="category"
+                    id="formCategory"
+                    style="margin-bottom: 10px"
+                    class="form-control imputForms"
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="thumbnail"> Thumbnail: </label>
+                  <br />
+                  <input
+                    type="text"
+                    name="thumbnail"
+                    id="formThumbnail"
+                    style="margin-bottom: 10px"
+                    class="form-control imputForms"
+                  />
+                </div>
+                <div
+                  style="display: flex; justify-content: center; align-items: center"
+                >
+                  <input
+                    type="submit"
+                    value="Add Product"
+                    class="btn-sm btn btn-outline-info"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const sessionUser = { isPremium: '{{sessionUser.isPremium}}',_id : '{{sessionUser._id}}'
+  }
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/indexProducts.js"></script>

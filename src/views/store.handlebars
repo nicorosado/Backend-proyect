@@ -1,0 +1,153 @@
+{{!-- <div class="container productTable">
+  <div class="card col-12">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">List of Products</h5>
+      <a href="/dashboard" class="card-link">Back</a>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <div id="dinamic-product-list" class="dinamic-product-list">
+                {{#each displayedProducts}}
+                  <div
+                    class="card -dashboard"
+                    style="margin-top: 10px; width: 18rem;"
+                  >
+                    <img src="img.png" class="card-img-top" alt="..." />
+                    <div class="card-header backgroundTable">
+                      <h5 class="card-title">{{this.title}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush card-body-style">
+                      <li class="list-group-item">Code: {{this.code}}</li>
+                      <li class="list-group-item">Price: {{this.price}}</li>
+                      <li class="list-group-item">Stock: {{this.stock}}</li>
+                      <li class="list-group-item">Category:
+                        {{this.category}}</li>
+                      <li class="list-group-item backgroundTable">
+                        <a
+                          class="card-link btn btn-sm btn-outline-success"
+                          onclick="addToCart('{{this._id}}')"
+                        >Add</a>
+                        <a
+                          class="card-link btn btn-sm btn-outline-danger"
+                          onclick="removeFromCart('{{this._id}}')"
+                        >Delete</a>
+
+                      </li>
+                    </ul>
+                  </div>
+                {{/each}}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div id="cart-product-list" class="col-2">
+  <div
+    class="card -dashboard"
+    style="max-width: min-content; box-sizing: content-box; margin-top: 50px; position: fixed; max-width: 11.7rem; min-width: 11.7rem;"
+  >
+    <div class="card-header">
+      <h3 class="card-title titleColor">CART</h3>
+    </div>
+    <div id="dinamic-list-cart" class="card-body">
+      {{#each oldCartUnfinished.cartProducts}}
+        <p class="card-text">{{this.idProduct.title}} x {{this.quantity}}</p>
+      {{/each}}
+    </div>
+    <a
+      href="/checkout"
+      class="card-link btn-sm btn btn-outline-info"
+    >Continue</a>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/indexProductsToCart.js"></script>
+<script>
+  const sessionUser = { idCart: '{{sessionUser.idCart}}', isPremium: '{{sessionUser.isPremium}}',
+  _id: '{{sessionUser._id}}' };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+
+<div class="container productTable">
+  <div class="card col-12">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+      <!-- Center the "List of Products" title and make it larger -->
+      <h2 class="text-center">List of Products</h2>
+      <a href="/dashboard" class="card-link">Back</a>
+      <a href="/checkout" class="btn btn-lg btn-outline-info float-right">Go to
+        Cart</a>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <div id="dinamic-product-list" class="dinamic-product-list">
+                {{#each displayedProducts}}
+                  <div
+                    class="card -dashboard"
+                    style="margin-top: 10px; width: 18rem;"
+                  >
+                    <img src="img.png" class="card-img-top" alt="..." />
+                    <div class="card-header backgroundTable">
+                      <h5 class="card-title">{{this.title}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush card-body-style">
+                      <li class="list-group-item">Code: {{this.code}}</li>
+                      <li class="list-group-item">Price: {{this.price}}</li>
+                      <li class="list-group-item">Stock: {{this.stock}}</li>
+                      <li class="list-group-item">Category:
+                        {{this.category}}</li>
+                      <li class="list-group-item backgroundTable">
+                        <a
+                          class="card-link btn btn-sm btn-outline-success"
+                          onclick="addToCart('{{this._id}}')"
+                        >Add</a>
+                        <a
+                          class="card-link btn btn-sm btn-outline-danger"
+                          onclick="deleteProduct('{{this._id}}')"
+                        >Delete</a>
+                      </li>
+                    </ul>
+                  </div>
+                {{/each}}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div id="cart-product-list" class="col-2">
+  <div
+    class="card -dashboard"
+    style="max-width: min-content; box-sizing: content-box; margin-top: 50px; position: fixed; max-width: 11.7rem; min-width: 11.7rem;"
+  >
+    <div class="card-header">
+      <h3 class="card-title titleColor">CART</h3>
+    </div>
+    <div id="dinamic-list-cart" class="card-body">
+      {{#each oldCartUnfinished.cartProducts}}
+        <p class="card-text">{{this.idProduct.title}} x {{this.quantity}}</p>
+      {{/each}}
+    </div>
+    <a
+      href="/checkout"
+      class="card-link btn-sm btn btn-outline-info"
+    >Continue</a>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/indexProductsToCart.js"></script>
+<script>
+  const sessionUser = { idCart: '{{sessionUser.idCart}}', isPremium: '{{sessionUser.isPremium}}',
+  _id: '{{sessionUser._id}}' };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

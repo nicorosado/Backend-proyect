@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h2>CheckOut</h2>
+    </div>
+    <div class="card-body">
+      <div class="info">
+        <p>Name: {{user.firstName}}</p>
+        <p>Email: {{user.email}}</p>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <p class="card-title">Your purchase</p>
+          {{#each cartProducts.cartProducts}}
+            <p>{{idProduct.title}} x {{quantity}}</p>
+          {{/each}}
+        </div>
+        <div class="col-4">
+          {{#each ticketPreview.cartWithStock}}
+            <p>{{idProduct.title}} x {{quantity}} = ${{totalPrice}}</p>
+          {{/each}}
+          <p><b>TOTAL $ {{ticketPreview.totalPriceTicket}}</b></p>
+        </div>
+      </div>
+      <a href="/html/products" class="btn btn-lg btn-primary">Back</a>
+      <a href="/finishticket" class="btn btn-lg btn-success">End purchase</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="container">
+  <div
+    class="card col-6 -dashboard"
+    style="margin-top: 10vh; margin-bottom: 10vh;"
+  >
+    <div class="card-body card-body-style">
+      <h5 class="card-title">User Info</h5>
+      <div class="col-12">
+        <p><strong>Name:</strong> {{user.firstName}}</p>
+        <p><strong>Last Name:</strong> {{user.lastName}}</p>
+        <p><strong>Email:</strong> {{user.email}}</p>
+        <p><strong>isAdmin:</strong>
+          {{#if user.isPremium}}Yes{{else}}No{{/if}}</p>
+        <p><strong>Role:</strong> {{user.role}}</p>
+        <p><strong>Cart:</strong> {{user.idCart}}</p>
+        <br />
+        <a href="/api/sessions/current" class="btn btn-outline-info">Session
+          Data</a>
+        <br />
+        <a href="/auth/logout" class="btn btn-danger">Exit</a>
+      </div>
+    </div>
+  </div>
+</div>

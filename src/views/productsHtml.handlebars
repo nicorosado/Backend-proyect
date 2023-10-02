@@ -1,0 +1,73 @@
+<div class="container productTable">
+  <div class="card col-12">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2 class="text-center mb-0 flex-grow-1">List of Products</h2>
+      <a href="/checkout" class="btn btn-lg btn-info">Go to Cart</a>
+    </div>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Code</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Category</th>
+            <th scope="col">Thumbnail</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each products}}
+            <tr>
+              <td>{{this.title}}</td>
+              <td>{{this.description}}</td>
+              <td>{{this.price}}</td>
+              <td>{{this.code}}</td>
+              <td>{{this.stock}}</td>
+              <td>{{this.category}}</td>
+              <td>{{this.thumbnail}}</td>
+              <td>
+                <button
+                  class="btn btn-success"
+                  onclick="addToCart('{{this._id}}')"
+                >Add to Cart</button>
+                <button
+                  class="btn btn-danger"
+                  onclick="deleteProductFromCart('{{this._id}}')"
+                >Remove from Cart</button>
+                <button
+                  class="btn btn-danger"
+                  onclick="deleteProduct('{{this._id}}')"
+                >Delete Product</button>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-md-6 text-center">
+          <a href="/dashboard" class="btn btn-lg btn-primary">Back</a>
+        </div>
+        <div class="col-md-6 text-right">
+          <a href="/checkout" class="btn btn-lg btn-info">Go to Cart</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="dinamic-list-cart" class="card-body">
+    {{#each oldCartUnfinished.cartProducts}}
+      <p class="card-text">{{this.idProduct.title}} x {{this.quantity}}</p>
+    {{/each}}
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/indexProductsToCart.js"></script>
+<script>
+  const sessionUser = { idCart: '{{sessionUser.idCart}}', isPremium: '{{sessionUser.isPremium}}',
+  _id: '{{sessionUser._id}}' };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

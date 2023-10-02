@@ -1,74 +1,80 @@
-import express from "express";
-import { prodructsRouter } from "./routes/products.router.js";
-import { cartsRouter } from "./routes/carts.router.js";
-import { __dirname, connectMongo } from "./utils.js";
+import express from 'express';
+import productRoutes from './routes/productRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
+import chatRoutes from './routes/chatRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import { __dirname } from "./utils.js";
 import path from "path";
-import handlebars from "express-handlebars"
-import { viewsRouter } from "./routes/views.router.js";
-import cors from "cors";
-import { connectSocket } from "./sockets/chat.js";
-import { usersRouter } from "./routes/users.router.js";
-import { authRouter } from "./routes/auth.router.js";
-import cookieParser from 'cookie-parser';
-import session from "express-session";
-import MongoStore from 'connect-mongo'
-import { iniPassport } from "./config/passport.config.js";
-import passport from "passport";
-import { sessionsRouter } from "./routes/session.router.js";
-import config from "./config/config.js";
+import handlebars from "express-handlebars";
+import http from 'http';
+import { connectMongo } from "./utils/mongo.js";
+import { socketServerHandler } from "./utils/socket-io.js";
+import { iniPassport } from './config/passport.config.js';
+import passport from 'passport';
+import dotenv from "dotenv";
+import sessionRoutes from './routes/sessionsRoutes.js';
+import ticketRoutes from './routes/ticketRoutes.js';
+import errorHandler from "./middlewares/error.js";
 
-const app = express()
-const port = config.port;
+const app = express();
+const port = 8080;
 
-const httpServer = app.listen(port, () => {
-  console.log(`Example app listening on http://localhost:${port}`);
-});
-connectSocket(httpServer);
+// Connect a MongoDB/Atlas
 connectMongo();
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, "public")));
-app.use(cors());
-app.use(cookieParser());
+// Crea HTTP server
+const httpServer = http.createServer(app);
 
-//SESSION
+// Anuncia puerto
+httpServer.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+// Socket server handler
+socketServerHandler(httpServer);
+
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+
+// Engine Handlebars para views
+app.engine("handlebars", handlebars.engine());
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "handlebars");
+
+
+dotenv.config(); // Carga variables de entorno del .env
 app.use(
   session({
-    store: MongoStore.create({
-      mongoUrl: "mongodb+srv://nicorosadonr:vVvmPSAf6gJmXL4z@backendcoder.l1bqk8c.mongodb.net/ecommerce?retryWrites=true&w=majority", ttl: 7200
-    }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL, ttl: 7200 }),
     secret: 'un-re-secreto',
     resave: true,
     saveUninitialized: true,
   })
 );
-//PASSPORT
+// Passport
 iniPassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.engine("handlebars", handlebars.engine());
-app.set("views", path.join(__dirname, "views"))
-app.set('view engine', 'handlebars');
 
-app.use("/api/products", prodructsRouter)
-app.use("/api/users", usersRouter)
-app.use("/api/sessions", sessionsRouter)
-app.use("/", viewsRouter)
+// Routes
+app.use('/', userRoutes);
+app.use('/', productRoutes);
+app.use('/', cartRoutes);
+app.use('/', chatRoutes);
+app.use('/', authRoutes);
+app.use('/', sessionRoutes);
+app.use('/', ticketRoutes);
 
-
-app.use("/api/carts", cartsRouter)
-app.use("/auth", authRouter)
-
-
+// Error handler
+app.use(errorHandler);
 
 
-
-
-
-
-
-
-//CON QUERY  ?ID=
-
+app.get("*", (req, res) => {
+  return res.status(404).json({ status: "Error", msg: "Not found", data: {} });
+});

@@ -1,0 +1,34 @@
+<div class="container">
+  <div
+    class="card col-12 -dashboard"
+    style="margin-top: 10vh; margin-bottom: 10vh;"
+  >
+    <div class="card-header">
+      <h2>CONGRATULATIONS</h2>
+    </div>
+    <div class="card-body card-body-style">
+      <h5 class="card-title">Details</h5>
+      <div class="row">
+        <div class="col-8">
+          {{#each ticket}}
+            <div class="card -dashboard" style="width: 80%;">
+              <div class="card-body">
+                <h5 class="card-title">{{idProduct.title}}</h5>
+                <p class="card-text">quantity: {{quantity}}</p>
+              </div>
+            </div>
+          {{/each}}
+          <p
+            class="card-text text-info"
+            style="font-size: 20px; margin-top: 10px;"
+          >TOTAL: ${{totalCart}}</p>
+        </div>
+      </div>
+      <a
+        style="text-align: left; margin-top: 20px;"
+        href="/html/products"
+        class="btn btn-info"
+      >Back to Store</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="card-header">
+  <div style="text-align: center;">
+    <h2>List of Users</h2>
+  </div>
+</div>
+<div class="half-width-table-container table-responsive">
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users as |user|}}
+        <tr>
+          <td>{{user.firstName}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.role}}</td>
+          <td>
+            <button
+              class="btn btn-primary"
+              onclick="changePremiumUser('{{user._id}}')"
+            >Change Role</button>
+            <button
+              class="btn btn-danger"
+              onclick="deleteUser('{{user._id}}')"
+            >Delete User</button>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <div class="col-md-6">
+    <a href="/dashboard" class="btn btn-lg btn-primary">Back</a>
+  </div>
+</div>

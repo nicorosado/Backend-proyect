@@ -1,50 +1,44 @@
-<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
-				<div class="d-flex justify-content-center">
-					<div class="brand_logo_container">
-						<img src="https://cdn.freebiesupply.com/logos/large/2x/pinterest-circle-logo-png-transparent.png" class="brand_logo" alt="Logo">
-					</div>
-				</div>
-                    <div>
-                        <h4 class="log">Login con</h4>
-                    <a href="/api/sessions/github" class="log-git"><i class="bi bi-github"></i> </a>
-                        <h4 class="log">o  Usuario y contraseña</h4>
-
-                    </div>
-				<div class="d-flex justify-content-center form_container">
-                <form action="/auth/login" method="POST">
-                        {{!-- firstName --}}
-                        {{!-- EMAIL --}}
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="bi bi-envelope-at"></i></span>
-							</div>
-                            <input type="text" name="email" placeholder="email" class="form-control input_pass"> 
-						</div>
-                       
-                        {{!-- PASSWORD --}}
-       	                <div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="bi bi-key"></i></span>
-							</div>
-                        <input type="text" name="password" placeholder="password" class="form-control input_pass"> 
-						</div>
-
-							<div class="d-flex justify-content-center mt-3 login_container">
-                                <input type="submit" value="login" class="btn login_btn"/>
-				   </div>
-					</form>
-				</div>
-		
-				<div class="mt-4">
-					<div class="d-flex justify-content-center links">
-						Dont you  have an account?? <a href="/auth/register" class="ml-2">Sign Up</a>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+<div class="container">
+  <div
+    class="card col-6 -dashboard"
+    style="margin-top: 10vh; margin-bottom: 10vh;"
+  >
+    <div class="card-header">
+      <h2>Welcome</h2>
+    </div>
+    <div class="card-body card-body-style">
+      <div class="col-8">
+        <form action="/auth/login" method="POST">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <input
+              type="text"
+              class="form-control inputForms"
+              name="email"
+              placeholder="Email"
+              aria-label="Email"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <input
+              type="password"
+              class="form-control inputForms"
+              name="password"
+              placeholder="Password"
+              aria-label="Password"
+              aria-describedby="basic-addon2"
+            />
+          </div>
+          <input class="btn btn-info" type="submit" value="Login" />
+          <a class="btn btn-outline-info" href="/auth/register">Register</a>
+        </form>
+        <br />
+        <a href="/api/sessions/github" class="btn btn-info">Enter with Github</a>
+      </div>
+    </div>
+  </div>
+</div>

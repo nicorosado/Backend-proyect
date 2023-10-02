@@ -1,0 +1,63 @@
+<div class="container">
+  <div
+    class="card col-8 -dashboard"
+    style="margin-top: 10vh; margin-bottom: 10vh;"
+  >
+    <div class="card-header">
+      <div>
+        <h2>Welcome {{user.firstName}}</h2>
+        <h4><a href="/auth/logout">Exit</a></h4>
+      </div>
+    </div>
+    <div class="card-body card-body-style">
+      <div class="row">
+        <div class="col-6">
+          <div class="card -dashboard" style="width: 18rem;">
+            <div class="card-body">
+              <a href="/realtimeproducts" class="card-link btn btn-info">Manage
+                Products</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card -dashboard" style="width: 18rem;">
+            <div class="card-body">
+              <button id="inactiveUsers" class="card-link btn btn-info">Delete
+                Inactive Users</button>
+            </div>
+          </div>
+        </div>
+        <!-- Agregar el enlace "Manage Users" aquí -->
+        <div class="col-6" style="margin-top: 20px;">
+          <div class="card -dashboard" style="width: 18rem;">
+            <div class="card-body">
+              <a href="/chat" class="card-link btn btn-info">Chat</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-6" style="margin-top: 20px;">
+          <div class="card -dashboard" style="width: 18rem;">
+            <div class="card-body">
+              <a href="/html/products" class="card-link btn btn-info">Store</a>
+            </div>
+          </div>
+        </div>
+        <!-- Enlace "Manage Users" -->
+        <div class="col-6" style="margin-top: 20px;">
+          <div class="card -dashboard" style="width: 18rem;">
+            <div class="card-body">
+              <a href="/api/users" class="card-link btn btn-info">Manage Users</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/indexProductsToCart.js"></script>
+<script>
+  const sessionUser = { idCart: '{{sessionUser.idCart}}', isPremium: '{{sessionUser.isPremium}}',
+  _id: '{{sessionUser._id}}' };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
