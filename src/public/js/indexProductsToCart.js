@@ -81,7 +81,7 @@ function addToCart(productId) {
 
 function deleteProductFromCart(productId) {
   console.log("removeFromCart called with productId:", sessionUser);
-  socket.emit("deleteProductFromCart", productId, sessionUser.idCart);
+  socket.emit("removeFromCart", productId, sessionUser.idCart);
   Swal.fire({
     icon: 'success',
     title: 'Product Removed',

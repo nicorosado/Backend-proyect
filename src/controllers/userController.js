@@ -52,6 +52,18 @@ class UsersController {
         }
     }
 
+    async changeUserRole(req, res) {
+        try {
+            const userId = req.params.uid;
+            const userData = await userService.getUserByIdOrEmail(userId, null);
+            const newRole = userData?.role === 'user' ? 'admin' : 'user';
+            const userChanged = await userService.updateUser(userId, { role: newRole });
+            return res.json(userChanged);
+        } catch (err) {
+            return res.status(500).json({ error: 'Error changing user role' });
+        }
+    }
+
     profile(req, res) {
         const user = req.session.user;
         return res.render('profile', { user: user });

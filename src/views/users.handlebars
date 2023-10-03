@@ -21,8 +21,9 @@
           <td>{{user.role}}</td>
           <td>
             <button
-              class="btn btn-primary"
-              onclick="changePremiumUser('{{user._id}}')"
+              class="btn btn-primary change-role-button"
+              data-user-id="{{user._id}}"
+              onclick="changeUserRole(this)"
             >Change Role</button>
             <button
               class="btn btn-danger"
@@ -32,8 +33,14 @@
         </tr>
       {{/each}}
     </tbody>
+
   </table>
   <div class="col-md-6">
     <a href="/dashboard" class="btn btn-lg btn-primary">Back</a>
   </div>
 </div>
+<script src="/js/indexUsers.js"></script>
+<script>
+  const sessionUser = { idCart: '{{sessionUser.idCart}}', isPremium: '{{sessionUser.isPremium}}',
+  _id: '{{sessionUser._id}}' };
+</script>
