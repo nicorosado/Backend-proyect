@@ -1,4 +1,5 @@
 import { productService } from '../services/productService.js';
+import { sendEmail } from '../services/mailer.js'
 
 class ProductsController {
 
@@ -71,12 +72,21 @@ class ProductsController {
   async deleteProduct(req, res) {
     try {
       const { pid } = req.params;
-      const deleted = await productService.deleteProduct(pid)
-      return res.status(200).json(deleted);
+      const deleted = await productService.deleteProduct(pid);
+      if (!deleted) {
+        return res.status(404).json({ Error: 'Product not found' });
+      }
+      const userEmail = deleted.owner?.email || null;
+      const productName = deleted.title;
+      if (userEmail) {
+        sendEmail(userEmail, productName);
+      }
+      res.status(204).send()
     } catch (err) {
+      console.log(err)
       res.status(500).json({ Error: `${err}` });
     }
-  };
+  }
 
   async realtimeproducts(req, res) {
     try {
@@ -102,6 +112,7 @@ class ProductsController {
       res.status(500).alert({ Error: `1${err}` });
     }
   }
+
 }
 
 export const productsController = new ProductsController();

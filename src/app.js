@@ -22,32 +22,26 @@ import errorHandler from "./middlewares/error.js";
 const app = express();
 const port = 8080;
 
-// Connect a MongoDB/Atlas
 connectMongo();
 
-// Crea HTTP server
 const httpServer = http.createServer(app);
 
-// Anuncia puerto
 httpServer.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`Server running on http://localhost:${port}/auth/login`);
 });
 
-// Socket server handler
 socketServerHandler(httpServer);
 
-// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// Engine Handlebars para views
 app.engine("handlebars", handlebars.engine());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "handlebars");
 
 
-dotenv.config(); // Carga variables de entorno del .env
+dotenv.config();
 app.use(
   session({
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URL, ttl: 7200 }),
@@ -56,13 +50,13 @@ app.use(
     saveUninitialized: true,
   })
 );
-// Passport
+
+
 iniPassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
 
-// Routes
 app.use('/', userRoutes);
 app.use('/', productRoutes);
 app.use('/', cartRoutes);
@@ -70,8 +64,6 @@ app.use('/', chatRoutes);
 app.use('/', authRoutes);
 app.use('/', sessionRoutes);
 app.use('/', ticketRoutes);
-
-// Error handler
 app.use(errorHandler);
 
 

@@ -11,7 +11,7 @@ const schema = new Schema({
     stock: { type: Number },
     category: { type: String, index: true },
     thumbnail: { type: String },
-    owner: { type: String },
+    owner: { type: Schema.Types.ObjectId, ref: "users" },
 }, { versionKey: false });
 schema.plugin(mongoosePaginate);
 export const ProductModel = model("products", schema);

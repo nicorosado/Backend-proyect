@@ -42,7 +42,6 @@ export class UserService {
     }
   };
 
-  // USER NUEVO
   async addUser(newUser) {
     try {
       const users = await this.getUsers();
@@ -50,9 +49,7 @@ export class UserService {
       if (userExist) {
         throw ("Ya existe el Usuario que desea ingresar.");
       };
-      //Creo Carrito
       const cartId = await cartService.addCart()
-      //Armo datos Usuario
       const userToCreate = {
         email: newUser.email && /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(newUser.email) ? newUser.email : (() => { throw ("Debe ingresar un Email válido.") })(),
         firstName: newUser.firstName ? newUser.firstName : (() => { throw ("Debe ingresar Nombre.") })(),
@@ -125,8 +122,7 @@ export class UserService {
     }
 
   };
-  // DELETE USUARIO
-  async deleteUser(userid) {
+  /* async deleteUser(userid) {
     try {
       const idcartU = await this.getUserByIdOrEmail(userid, null)
       const deletedUser = await userDAO.deleteUser(userid);
@@ -136,10 +132,21 @@ export class UserService {
     } catch (err) {
       throw (`Fallo al borrar el Usuario. ${err}`);
     };
+  }; */
+  async deleteUser(userid) {
+    try {
+      const idcartU = await this.getUserByIdOrEmail(userid, null);
+      await userDAO.deleteUser(userid);
+      const cartIdUser = await cartService.getCartById(idcartU.idCart);
+      await cartService.deleteCart(cartIdUser);
+      return userid;
+    } catch (err) {
+      throw (`Failed to delete user: ${err}`);
+    };
   };
 
 
-  //LLAVE FIN USER SERVICE
+
 };
 
 export const userService = new UserService();

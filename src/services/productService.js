@@ -80,7 +80,7 @@ export class ProductService {
         status: newProd.status,
         stock: validatePositiveInteger(newProd.stock, "stock"),
         category: validateString(newProd.category, "category"),
-        owner: newProd.owner,
+        owner: newProd.owner, // ID del user
         thumbnail: newProd.thumbnail || "Undefined"
       };
       const createdProduct = await productDAO.addProduct(newProduct);
@@ -130,10 +130,11 @@ export class ProductService {
   async deleteProduct(id) {
     try {
       const deletedProduct = await productDAO.deleteProduct({ _id: id });
+      console.log({ deletedProduct })
       return deletedProduct;
     } catch (err) {
       throw (`Error deleting product ${id}`);
-    };
+    }
   };
 
 };

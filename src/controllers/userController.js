@@ -58,8 +58,10 @@ class UsersController {
             const userData = await userService.getUserByIdOrEmail(userId, null);
             const newRole = userData?.role === 'user' ? 'admin' : 'user';
             const userChanged = await userService.updateUser(userId, { role: newRole });
+            console.log(userChanged)
             return res.json(userChanged);
         } catch (err) {
+            console.log(err)
             return res.status(500).json({ error: 'Error changing user role' });
         }
     }
@@ -89,13 +91,22 @@ class UsersController {
             return res.status(500).json({ Error: `didnt find user ${err}` });
         }
     };
+    /*  async deleteUser(req, res) {
+         const uid = req.params.uid;
+         try {
+             const user = await userService.deleteUser(uid);
+             return res.json(user)
+         } catch (err) {
+             return res.status(500).json({ Error: `Didnt find user ${err}` });
+         }
+     }; */
     async deleteUser(req, res) {
         const uid = req.params.uid;
         try {
-            const user = await userService.deleteUser(uid);
-            return res.json(user)
+            const deletedUserId = await userService.deleteUser(uid);
+            return res.json({ userId: deletedUserId });
         } catch (err) {
-            return res.status(500).json({ Error: `Didnt find user ${err}` });
+            return res.status(500).json({ Error: `Failed to delete user: ${err}` });
         }
     };
 

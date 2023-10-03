@@ -75,26 +75,28 @@ export class CartService {
     };
   };
 
-  async deleteProductFromCart(cartId, productId, quantityP) {
+  async deleteProductFromCart(cartId, productId) {
     try {
       const productToCart = await productService.getProductById(productId);
       if (!productToCart) {
         throw new Error("Product doesn't exist in the database");
       }
-
       const cart = await cartDAO.getCartById(cartId);
       if (!cart) {
         throw new Error(`Didn't find cart with id: ${cartId}`);
       }
-
       const productIndex = cart.products.findIndex((p) => p.idProduct.toString() === productId);
       if (productIndex !== -1 && cart.products[productIndex].quantity > 0) {
-        if (cart.products[productIndex].idProduct === productId) {
-          cart.products.splice(productIndex, 1);
+        if (cart.products[productIndex].idProduct.toString() === productId) {
+          if (cart.products[productIndex].quantity > 1) {
+            cart.products[productIndex].quantity -= 1
+          } else {
+            cart.products.splice(productIndex, 1);
+          }
         }
       }
-
-      const updatedCart = await cartDAO.deleteProductFromCart({ _id: cartId }, cart);
+      console.log(cart.products)
+      const updatedCart = await cartDAO.deleteProductFromCart(cartId, cart);
       return updatedCart;
     } catch (err) {
       throw new Error(`Error deleting product from cart: ${err.message}`);

@@ -6,12 +6,10 @@ import { productService } from "../services/productService.js";
 export function socketServerHandler(httpServer) {
   const socketServer = new Server(httpServer);
 
-  // Escucha/anuncia conexiones de clientes
   socketServer.on("connection", (socket) => {
     console.log("A client-socket has connected: " + socket.id);
 
 
-    /******** SOCKET CARTS **********/
     socket.on("onFilterChange", async (filterLimit, filterPage, filterSort, filterAttName, filterText,) => {
       try {
         const limit = filterLimit;
@@ -48,7 +46,6 @@ export function socketServerHandler(httpServer) {
       }
     });
 
-    // indexProducts.js parte de socket  
     socket.on("new-product", async (newProd) => {
       try {
         await productService.addProduct({ ...newProd });
@@ -59,7 +56,6 @@ export function socketServerHandler(httpServer) {
       }
     });
 
-    // indexProductsToCart.js parte de socket
     socket.on("delete-product", async (productId) => {
       try {
         const deletedProduct = await productService.deleteProduct(productId);

@@ -9,7 +9,6 @@ const stock = document.getElementById("formStock");
 const category = document.getElementById("formCategory");
 const thumbnail = document.getElementById("formThumbnail");
 
-// Escucha los cambios en la lista de productos y actualiza la tabla
 socket.on("products", (productsList) => {
   const tableBody = document.getElementById("dinamic-product-list");
   const tableRows = productsList.map((product) => `
@@ -31,10 +30,14 @@ socket.on("products", (productsList) => {
 
 formProducts.addEventListener("submit", (e) => {
   e.preventDefault();
-
+  console.log(sessionUser._id)
   let owner;
-  // Asigna el propietario en función de si es un usuario premium o no
-  owner = sessionUser.isPremium === 'true' ? sessionUser._id : 'admin';
+
+  if (sessionUser.isPremium === 'true') {
+    owner = sessionUser._id;
+  } else {
+    owner = 'admin';
+  }
 
   const newProd = {
     title: title.value,

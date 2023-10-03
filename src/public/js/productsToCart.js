@@ -2,7 +2,6 @@ const socket = io();
 socket.on("updatedProducts", (listProducts) => {
   let displayedProducts;
   const filteredProducts = listProducts.docs.filter(product => product.owner !== sessionUser._id);
-  // Si es usuario premium, muestra los productos que no sea owner, si no muestra todos los productos.
   sessionUser.isPremium === 'false' ? displayedProducts = listProducts.docs : displayedProducts = filteredProducts;
 
   const tableBody = document.getElementById("dinamic-product-list");
@@ -29,15 +28,12 @@ socket.on("updatedProducts", (listProducts) => {
   tableBody.innerHTML = tableRows.join("");
   const pagination = document.querySelector('.pagination');
 
-  // Si existe prevPage del populate se muestra
   const previousPage = listProducts.hasPrevPage
     ? `<li class="page-item"><a class="page-link" href="#" onclick="onFilterChange(${listProducts.prevPage})"><-- </a></li>`
     : '';
-  // Si existe nextPage del populate se muestra
   const nextPage = listProducts.hasNextPage ?
     `<li class="page-item"><a class="page-link" href="#" onclick="onFilterChange(${listProducts.nextPage})"> --></a></li>` : '';
 
-  // Render dinámicos de page-item para paginado  
   const paginationHTML = `
     ${previousPage}
     <li class="page-item"><a class="page-link">${listProducts.page} de ${listProducts.totalPages} paginas</a></li>
@@ -64,9 +60,6 @@ function onFilterChange(page) {
   socket.emit("onFilterChange", filterLimit, filterPage, filterSort, filterAttName, filterText);
 }
 
-/* function addToCart(productId) {
-  socket.emit("addToCart", productId, sessionUser.idCart);
-} */
 function addToCart(productId) {
   socket.emit("addToCart", productId, sessionUser.idCart);
   Swal.fire({
@@ -120,3 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+function deleteProduct(productId) {
+  fetch(`/products/delete/${productId}`, {
+    method: 'DELETE',
+  })
+    .then((response) => {
+      if (response.ok) {
+        Swal.fire('Deleted!', 'Product deleted successfully', 'success');
+      } else {
+        Swal.fire('Error!', 'An error occurred while deleting the product', 'error');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      Swal.fire('Error!', 'An error occurred while deleting the product', 'error');
+    });
+}

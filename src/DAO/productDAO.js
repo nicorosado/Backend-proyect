@@ -48,8 +48,10 @@ export class ProductDAO {
 
   async deleteProduct(id) {
     try {
-      const deletedProduct = await ProductModel.findByIdAndDelete(id);
-      return deletedProduct;
+      const product = await ProductModel.findOne({ _id: id }).populate("owner").lean()
+      await ProductModel.deleteOne({ _id: id });
+      console.log({ product })
+      return product;
     } catch (err) {
       throw (`Error deleting product ${err}`);
     };

@@ -59,7 +59,7 @@ export function iniPassport() {
     )
   );
 
-  dotenv.config(); // Carga variables de entorno del .env
+  dotenv.config();
   passport.use(
     'github',
     new GitHubStrategy(
