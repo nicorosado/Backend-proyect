@@ -68,5 +68,5 @@ app.use(errorHandler);
 
 
 app.get("*", (req, res) => {
-  return res.status(404).json({ status: "Error", msg: "Not found", data: {} });
+  return res.redirect("/auth/login");
 });
