@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       })
         .then((response) => {
-          if (response.status === 204) {
+          if (response.status === 200) {
             Swal.fire({
               icon: 'success',
               title: 'Inactive users deleted',

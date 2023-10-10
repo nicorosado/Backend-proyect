@@ -1,7 +1,6 @@
 import { userService } from '../services/userService.js';
-import { sessionsController } from '../controllers/sessionController.js';
 import { sendMail } from '../services/mailer.js'
-
+import Swal from 'sweetalert2';
 class UsersController {
     register(req, res) {
         return userService.register(res);
@@ -91,15 +90,7 @@ class UsersController {
             return res.status(500).json({ Error: `didnt find user ${err}` });
         }
     };
-    /*  async deleteUser(req, res) {
-         const uid = req.params.uid;
-         try {
-             const user = await userService.deleteUser(uid);
-             return res.json(user)
-         } catch (err) {
-             return res.status(500).json({ Error: `Didnt find user ${err}` });
-         }
-     }; */
+
     async deleteUser(req, res) {
         const uid = req.params.uid;
         try {
@@ -121,22 +112,12 @@ class UsersController {
 
             for (const user of usersToDelete) {
                 try {
-                    await sendMail(user.email);
+                    sendMail(user.email);
                     await userService.deleteUser(user._id);
                     deletedUserCount++;
                 } catch (err) {
                     console.error(`Error deleting user ${user._id}: ${err}`);
                 }
-            }
-
-            if (deletedUserCount > 0) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Usuarios eliminados',
-                    text: `Se han eliminado ${deletedUserCount} usuarios inactivos.`,
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
             }
 
             return res.json(usersToDelete);
