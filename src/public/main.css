@@ -1,16 +1,14 @@
-/* Nueva paleta de colores */
 :root {
-  --primary-color: #3498db; /* Azul */
-  --secondary-color: #e74c3c; /* Rojo */
-  --background-color: #f2f2f2; /* Gris claro */
-  --text-color: #333; /* Texto principal */
-  --button-background: #27ae60; /* Verde */
+  --primary-color: #3498db;
+  --secondary-color: #e74c3c;
+  --background-color: #f2f2f2;
+  --text-color: #333;
+  --button-background: #27ae60;
   --button-border: #27ae60;
-  --button-text: #fff; /* Texto de botón */
-  --error-color: #c0392b; /* Rojo oscuro */
+  --button-text: #fff;
+  --error-color: #c0392b;
 }
 
-/* Estilos para la página de login */
 .login {
   text-align: center;
   padding-top: 10vh;
@@ -36,14 +34,12 @@
   color: var(--text-color);
 }
 
-/* Estilos para la página de registro */
 .register {
   text-align: center;
   padding-top: 10vh;
   background-color: var(--background-color);
 }
 
-/* Estilos para la tabla de productos */
 .backgroundTable {
   background-color: var(--background-color);
 }
@@ -62,14 +58,12 @@
   background-color: var(--background-color);
 }
 
-/* Estilos para la lista dinámica de productos */
 .dinamic-product-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
-/* Estilos para los encabezados de tabla */
 th {
   color: var(--secondary-color);
 }
@@ -150,10 +144,10 @@ a {
 }
 
 .half-width-table-container {
-  width: 50%; /* Ajusta este valor según tus necesidades */
-  margin: 0 auto; /* Esto centrará el contenedor en la pantalla horizontalmente */
+  width: 50%;
+  margin: 0 auto;
 }
 
 .table {
-  width: 100%; /* Hace que la tabla ocupe todo el ancho del contenedor */
+  width: 100%;
 }

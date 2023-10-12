@@ -62,7 +62,7 @@ export class CartService {
       const cartProducts = await cartDAO.getProductsByCartId(cartId)
       return cartProducts;
     } catch (err) {
-      throw (`Error getting products`);
+      throw (`Error getting products ${err}`);
     }
   };
 
@@ -99,7 +99,7 @@ export class CartService {
       const updatedCart = await cartDAO.deleteProductFromCart(cartId, cart);
       return updatedCart;
     } catch (err) {
-      throw new Error(`Error deleting product from cart: ${err.message}`);
+      throw (`Error deleting product from cart: ${err.message}`);
     }
   }
 

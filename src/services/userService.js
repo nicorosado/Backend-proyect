@@ -47,13 +47,13 @@ export class UserService {
       const users = await this.getUsers();
       const userExist = users.some((user) => user.email == newUser.email);
       if (userExist) {
-        throw ("Ya existe el Usuario que desea ingresar.");
+        throw ("User already exists");
       };
       const cartId = await cartService.addCart()
       const userToCreate = {
-        email: newUser.email && /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(newUser.email) ? newUser.email : (() => { throw ("Debe ingresar un Email válido.") })(),
-        firstName: newUser.firstName ? newUser.firstName : (() => { throw ("Debe ingresar Nombre.") })(),
-        lastName: newUser.lastName ? newUser.lastName : (() => { throw ("Debe ingresar Apellido.") })(),
+        email: newUser.email && /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(newUser.email) ? newUser.email : (() => { throw ("Must enter a valid email") })(),
+        firstName: newUser.firstName ? newUser.firstName : (() => { throw ("Must enter name") })(),
+        lastName: newUser.lastName ? newUser.lastName : (() => { throw ("Must enter last name") })(),
         age: newUser.age ? newUser.age : '80',
         isPremium: true,
         role: 'user',
@@ -74,16 +74,16 @@ export class UserService {
       for (const field in fieldsToUpdate) {
         switch (field) {
           case "email":
-            userToUpdate.email = fieldsToUpdate.email !== "" ? fieldsToUpdate.email : (() => { throw ("Debe ingresar un email.") })();
+            userToUpdate.email = fieldsToUpdate.email !== "" ? fieldsToUpdate.email : (() => { throw ("Must enter an email") })();
             break;
           case "firstName":
-            userToUpdate.firstName = fieldsToUpdate.firstName !== "" ? fieldsToUpdate.firstName : (() => { throw ("Debe ingresar Nombre.") })();
+            userToUpdate.firstName = fieldsToUpdate.firstName !== "" ? fieldsToUpdate.firstName : (() => { throw ("Must enter a name") })();
             break;
           case "lastName":
-            userToUpdate.lastName = fieldsToUpdate.lastName !== "" ? fieldsToUpdate.lastName : (() => { throw ("Debe ingresar Apellido.") })();
+            userToUpdate.lastName = fieldsToUpdate.lastName !== "" ? fieldsToUpdate.lastName : (() => { throw ("Must enter a last name") })();
             break;
           case "age":
-            userToUpdate.age = fieldsToUpdate.age !== "" ? fieldsToUpdate.age : (() => { throw ("Debe ingresar su Edad(Cantidad de años).") })();
+            userToUpdate.age = fieldsToUpdate.age !== "" ? fieldsToUpdate.age : (() => { throw ("Must enter your age") })();
             break;
           case "role":
             userToUpdate.role = fieldsToUpdate.role !== "" ? fieldsToUpdate.role : "";
@@ -101,7 +101,7 @@ export class UserService {
       const userUpdated = await userDAO.updateUser({ _id: id }, userToUpdate);
       return userUpdated;
     } catch (err) {
-      throw (`No se pudo modificar Usuario con ID ${id}. ${err}`);
+      throw (`Couldnt update user ${id}. ${err}`);
     };
   };
   async getUserByIdOrEmail(id, email) {
@@ -118,21 +118,11 @@ export class UserService {
         return _email
       }
     } catch (err) {
-      throw (`Fallo al buscar Usuario. ${err}`);
+      throw (`Failed searching for user ${err}`);
     }
 
   };
-  /* async deleteUser(userid) {
-    try {
-      const idcartU = await this.getUserByIdOrEmail(userid, null)
-      const deletedUser = await userDAO.deleteUser(userid);
-      const cartIdUser = await cartService.getCartById(idcartU.idCart);
-      await cartService.deleteCart(cartIdUser);
-      return deletedUser;
-    } catch (err) {
-      throw (`Fallo al borrar el Usuario. ${err}`);
-    };
-  }; */
+
   async deleteUser(userid) {
     try {
       const idcartU = await this.getUserByIdOrEmail(userid, null);
