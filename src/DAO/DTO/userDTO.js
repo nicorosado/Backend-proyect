@@ -5,6 +5,11 @@ export class UserDTO {
         this.email = user.email;
         this.isPremium = user.isPremium;
         this.role = user.role;
+        this.lastLoginDate = user.lastLoginDate;
+        this.age = user.age;
+        this.idCart = user.idCart;
+        this.password = user.password;
+        this._id = user._id;
     }
 
 }

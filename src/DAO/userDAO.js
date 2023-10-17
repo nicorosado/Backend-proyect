@@ -1,11 +1,11 @@
-//@ts-check
+import { UserDTO } from "./DTO/userDTO.js";
 import { UserModel } from "./mongo/models/userModel.js";
 
 export class UserDAO {
   async getUsers(limit, filter) {
     try {
       const users = await UserModel.find(filter).limit(limit).lean();
-      return users;
+      const userDTOs = users.map(user => new UserDTO(user)); return userDTOs;
     } catch (err) {
       throw (`Error accesing users ${err}`);
     }
